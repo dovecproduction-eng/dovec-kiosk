@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOVEC Kiosk · Video Yönetimi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0C2340;--navy-deep:#081A30;--navy-mid:#16395C;--gold:#C5923A;--gold-light:#E2C079;--white:#fff;--paper:#F7F4EE;--line:rgba(197,146,58,.28);--ink-soft:#46566B}
+body{font-family:'Karla',sans-serif;background:linear-gradient(160deg,var(--paper),#F1EBDF);color:var(--navy);min-height:100vh;padding-bottom:120px}
+.serif{font-family:'Playfair Display',serif}
+
+header{position:sticky;top:0;z-index:50;background:linear-gradient(180deg,var(--navy-deep),var(--navy));color:#fff;padding:22px 40px;
+  display:flex;align-items:center;justify-content:space-between;box-shadow:0 10px 40px -16px rgba(8,26,48,.6)}
+header .h-brand{display:flex;align-items:center;gap:13px}
+header .h-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px var(--gold)}
+header .h-name{font-family:'Playfair Display',serif;letter-spacing:.34em;font-size:1rem;padding-left:.34em}
+header .h-tag{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-light);margin-top:3px}
+header a.view{font-size:.78rem;font-weight:600;letter-spacing:.06em;color:var(--gold-light);text-decoration:none;border:1px solid rgba(226,192,121,.4);padding:9px 18px;border-radius:30px;transition:.3s}
+header a.view:hover{background:rgba(226,192,121,.16)}
+
+.intro{max-width:1100px;margin:30px auto 8px;padding:0 40px}
+.intro h1{font-family:'Playfair Display',serif;font-weight:600;font-size:1.9rem;margin-bottom:8px}
+.intro p{color:var(--ink-soft);font-size:.92rem;line-height:1.6;max-width:760px}
+.intro code{background:rgba(12,35,64,.07);padding:2px 8px;border-radius:6px;font-size:.85em;color:var(--navy)}
+
+.grid{max-width:1100px;margin:18px auto;padding:0 40px;display:flex;flex-direction:column;gap:16px}
+.pcard{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px 22px;box-shadow:0 8px 30px -18px rgba(8,26,48,.4)}
+.pcard-head{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+.pcard-thumb{width:84px;height:54px;border-radius:10px;background-size:cover;background-position:center;flex:0 0 auto;box-shadow:0 4px 14px -6px rgba(8,26,48,.5)}
+.pcard-title .pt-name{font-family:'Playfair Display',serif;font-weight:600;font-size:1.18rem;color:var(--navy)}
+.pcard-title .pt-loc{font-size:.74rem;color:var(--ink-soft);margin-top:2px}
+.pcard-count{margin-left:auto;font-size:.7rem;font-weight:700;letter-spacing:.08em;color:var(--gold);background:rgba(197,146,58,.12);border:1px solid var(--line);padding:6px 12px;border-radius:20px}
+
+.slots{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:14px}
+.slot{border:1px solid var(--line);border-radius:12px;padding:12px;background:linear-gradient(180deg,#fff,#FBF8F1)}
+.slot label{display:block;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:7px}
+.slot .row{display:flex;gap:10px;align-items:flex-start}
+.slot input{flex:1;border:1px solid rgba(12,35,64,.16);border-radius:8px;padding:10px 11px;font-family:'Karla',sans-serif;font-size:.82rem;color:var(--navy);background:#fff;transition:.2s;min-width:0}
+.slot input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(197,146,58,.14)}
+.slot .vthumb{width:46px;height:62px;border-radius:8px;background:#0a1c30 center/cover;flex:0 0 auto;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.slot .vthumb svg{width:18px;height:18px;stroke:rgba(226,192,121,.5);fill:none;stroke-width:1.6}
+.slot .vthumb img{width:100%;height:100%;object-fit:cover}
+
+.actionbar{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(180deg,rgba(247,244,238,0),var(--paper) 30%);
+  padding:24px 40px;display:flex;justify-content:center;gap:14px;z-index:60}
+.btn{font-family:'Karla',sans-serif;font-weight:700;font-size:.86rem;letter-spacing:.08em;padding:15px 30px;border-radius:40px;border:none;cursor:pointer;transition:.3s;display:inline-flex;align-items:center;gap:10px}
+.btn-primary{background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--navy-deep);box-shadow:0 14px 36px -12px rgba(197,146,58,.7)}
+.btn-primary:hover{transform:translateY(-2px)}
+.btn-ghost{background:#fff;color:var(--navy);border:1px solid var(--line)}
+.btn-ghost:hover{background:rgba(12,35,64,.04)}
+.btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.toast{position:fixed;bottom:96px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;padding:13px 26px;border-radius:40px;
+  font-size:.84rem;font-weight:600;opacity:0;pointer-events:none;transition:.4s;z-index:80;box-shadow:0 14px 40px -12px rgba(8,26,48,.6)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:720px){.slots{grid-template-columns:1fr}header,.intro,.grid{padding-left:20px;padding-right:20px}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="h-brand"><span class="h-dot"></span><span class="h-name serif">DOVEC GROUP</span></div>
+    <div class="h-tag">Kiosk · Video Yönetim Paneli</div>
+  </div>
+  <a class="view" href="index.html" target="_blank">Kiosk'u Aç ↗</a>
+</header>
+
+<div class="intro">
+  <h1 class="serif">Proje Videoları</h1>
+  <p>Her projeye en fazla <b>6 dikey YouTube videosu</b> ekleyebilirsiniz. Video bağlantısını ya da ID'sini yapıştırın
+  (<code>https://youtu.be/XXXX</code>, <code>youtube.com/shorts/XXXX</code> veya doğrudan <code>XXXX</code>).
+  <b>Önizle &amp; Kaydet</b> ile değişiklikler kiosk'ta anında görünür (bu cihazda). Kalıcı yayın için
+  <b>videos.js indir</b> butonuyla dosyayı indirip <code>kıos/</code> klasörüne kopyalayın ve yeniden deploy edin.</p>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="actionbar">
+  <button class="btn btn-ghost" id="previewBtn">
+    <svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+    Önizle &amp; Kaydet
+  </button>
+  <button class="btn btn-primary" id="downloadBtn">
+    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    videos.js indir
+  </button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="videos.js"></script>
+<script>
+/* proje listesi (index.html ile aynı isim/konum) */
+const PROJECTS = [
+  {id:'lacasalia', name:'La Casalia', loc:'Tatlısu · Gazimağusa'},
+  {id:'dpoint', name:'D-Point', loc:'İskele · Long Beach'},
+  {id:'natulux', name:'Natulux', loc:'Küçük Erenköy · Gazimağusa'},
+  {id:'quarencia', name:'Quarencia', loc:'Kuzey Kıbrıs'},
+  {id:'platinum', name:'Courtyard Platinum', loc:'Trikomo · İskele'},
+  {id:'laisla', name:'La Isla', loc:'Trikomo · Long Beach'},
+  {id:'skysakarya', name:'Sky Sakarya', loc:'Gazimağusa · KKTC'},
+  {id:'fs2', name:'Four Seasons Life 2', loc:'İskele · Hazır Teslim'},
+  {id:'fourseasons', name:'Four Season', loc:'Kuzey Kıbrıs'},
+  {id:'panorama', name:'Panorama', loc:'Kuzey Kıbrıs'},
+  {id:'fs3', name:'Four Seasons Life 3', loc:'İskele · Deniz Cephesi'},
+  {id:'clb', name:'Courtyard Long Beach', loc:'Long Beach · İskele'}
+];
+
+const LS_KEY = 'kios_videos';
+function loadCurrent(){
+  let data = {};
+  try{ const ls = JSON.parse(localStorage.getItem(LS_KEY)); if(ls) data = ls; }catch(e){}
+  const base = window.KIOS_VIDEOS || {};
+  const out = {};
+  PROJECTS.forEach(p=>{ out[p.id] = (data[p.id] || base[p.id] || ['','','','','','']).slice(0,6); while(out[p.id].length<6) out[p.id].push(''); });
+  return out;
+}
+function ytId(v){
+  if(!v) return '';
+  v = String(v).trim(); if(!v) return '';
+  const m = v.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([A-Za-z0-9_-]{6,})/);
+  return m ? m[1] : v;
+}
+
+const STATE = loadCurrent();
+
+function thumbHTML(id){
+  const vid = ytId(id);
+  if(vid) return `<img src="https://i.ytimg.com/vi/${vid}/default.jpg" alt="">`;
+  return `<svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>`;
+}
+
+function build(){
+  document.getElementById('grid').innerHTML = PROJECTS.map(p=>{
+    const vids = STATE[p.id];
+    const filled = vids.filter(v=>ytId(v)).length;
+    const slots = [0,1,2,3,4,5].map(i=>`
+      <div class="slot">
+        <label>Video ${i+1}</label>
+        <div class="row">
+          <input type="text" data-id="${p.id}" data-i="${i}" value="${(vids[i]||'').replace(/"/g,'&quot;')}" placeholder="YouTube linki veya ID">
+          <div class="vthumb" data-thumb="${p.id}-${i}">${thumbHTML(vids[i])}</div>
+        </div>
+      </div>`).join('');
+    return `<div class="pcard">
+      <div class="pcard-head">
+        <div class="pcard-thumb" style="background-image:url('gorseller/dovec/${p.id}/${p.id}_banner.webp')"></div>
+        <div class="pcard-title"><div class="pt-name">${p.name}</div><div class="pt-loc">${p.loc}</div></div>
+        <div class="pcard-count" data-count="${p.id}">${filled}/6 video</div>
+      </div>
+      <div class="slots">${slots}</div>
+    </div>`;
+  }).join('');
+
+  document.querySelectorAll('input[data-id]').forEach(inp=>{
+    inp.addEventListener('input',()=>{
+      const id = inp.dataset.id, i = +inp.dataset.i;
+      STATE[id][i] = inp.value;
+      document.querySelector(`[data-thumb="${id}-${i}"]`).innerHTML = thumbHTML(inp.value);
+      const filled = STATE[id].filter(v=>ytId(v)).length;
+      document.querySelector(`[data-count="${id}"]`).textContent = `${filled}/6 video`;
+    });
+  });
+}
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._t); t._t = setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+/* normalize: linkleri ID'ye çevir, boşları koru */
+function normalized(){
+  const out = {};
+  PROJECTS.forEach(p=>{ out[p.id] = STATE[p.id].map(v=>ytId(v)); });
+  return out;
+}
+
+document.getElementById('previewBtn').addEventListener('click',()=>{
+  localStorage.setItem(LS_KEY, JSON.stringify(normalized()));
+  toast('Kaydedildi · kiosk bu cihazda güncellendi');
+});
+
+document.getElementById('downloadBtn').addEventListener('click',()=>{
+  const data = normalized();
+  const lines = PROJECTS.map(p=>{
+    const v = data[p.id].map(x=>`"${x}"`).join(', ');
+    return `  ${p.id}:`.padEnd(15) + `[${v}]`;
+  }).join(',\n');
+  const content = `/* DOVEC Group Kiosk — Proje Video Konfigürasyonu
+ * admin.html üzerinden ${new Date().toLocaleString('tr-TR')} tarihinde üretildi.
+ * Her projenin 3 dikey (9:16) YouTube videosu (video ID).
+ */
+window.KIOS_VIDEOS = {
+${lines}
+};
+`;
+  const blob = new Blob([content], {type:'application/javascript'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'videos.js'; a.click();
+  URL.revokeObjectURL(url);
+  toast('videos.js indirildi · kıos/ klasörüne kopyalayın');
+});
+
+build();
+</script>
+</body>
+</html>
