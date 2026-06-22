@@ -9,7 +9,7 @@ window.KIOS_VIDEOS = {
   laisla:      ["", "", "", "", "", ""],
   natulux:     ["3H8a1t_Ljrw", "x2vRXdWaznA", "", "", "", ""],
   skysakarya:  ["-rt1HI-7nSg", "kKoQMUkeCao", "", "", "", ""],
-  dpoint:      ["", "", "", "", "", ""],
+  dpoint:      ["https://www.youtube.com/watch?v=K80VwnRwSRM", "https://www.youtube.com/shorts/Vp5yqUwBBp4", "https://www.youtube.com/watch?v=808y4rtMt-I", "https://www.youtube.com/watch?v=A6CIhCa_U8w"],
   platinum:    ["Z_rzoKH0Ch8", "HRfZx6gs7O4", "W5xedofeSnw", "ej4edQxBRAk", "", ""],
   quarencia:   ["-TLm8GJQwpQ", "7BuW4zCyj2M", "FaqkzOioUVM", "GryhzSiPwKU", "JIaZpqIB85o", "cSFZZcbWCPQ"],
   fs2:         ["KM0R26WyGzI", "", "", "", "", ""],
