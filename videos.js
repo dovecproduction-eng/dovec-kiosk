@@ -7,7 +7,7 @@
 window.KIOS_VIDEOS = {
   lacasalia:   ["videos/lacasalia-1.mp4", "videos/lacasalia-2.mp4", "videos/lacasalia-3.mp4", "", "", ""],
   laisla:      ["", "", "", "", "", ""],
-  natulux:     ["3H8a1t_Ljrw", "x2vRXdWaznA", "", "", "", ""],
+  natulux:     ["3H8a1t_Ljrw", "x2vRXdWaznA", "https://www.youtube.com/shorts/Y_CTEwK0SK8"],
   skysakarya:  ["-rt1HI-7nSg", "kKoQMUkeCao", "", "", "", ""],
   dpoint:      ["https://www.youtube.com/watch?v=K80VwnRwSRM", "https://www.youtube.com/shorts/Vp5yqUwBBp4", "https://www.youtube.com/watch?v=808y4rtMt-I", "https://www.youtube.com/watch?v=A6CIhCa_U8w"],
   platinum:    ["Z_rzoKH0Ch8", "HRfZx6gs7O4", "W5xedofeSnw", "ej4edQxBRAk", "", ""],
