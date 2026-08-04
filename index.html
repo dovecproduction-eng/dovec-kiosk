@@ -390,6 +390,25 @@ body{
 .vlight-close:hover{background:var(--gold);color:var(--navy-deep);transform:rotate(90deg)}
 .vlight-close svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
 
+/* ===== detay: daire tipleri bölümü (olanaklar üstü) ===== */
+.units-section{max-width:1620px;margin:46px auto 0}
+.unit-wrap{display:flex;flex-direction:column;gap:30px}
+.unit-cat{display:flex;align-items:center;gap:13px;font-family:'Karla',sans-serif;font-size:.62rem;font-weight:700;
+  letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin:0 0 18px}
+.unit-cat::after{content:'';flex:1 1 auto;height:1px;background:linear-gradient(90deg,rgba(226,192,121,.45),transparent)}
+.unit-grid{display:flex;flex-wrap:wrap;gap:14px}
+.unit-chip{display:flex;align-items:center;gap:13px;padding:16px 24px 16px 17px;border-radius:14px;
+  border:1px solid rgba(226,192,121,.2);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));
+  transition:.35s var(--ease)}
+.unit-chip:hover{border-color:rgba(226,192,121,.5);transform:translateY(-3px);
+  background:linear-gradient(180deg,rgba(226,192,121,.09),rgba(255,255,255,.02))}
+.unit-chip .u-ico{width:34px;height:34px;border-radius:9px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+  background:rgba(226,192,121,.1);border:1px solid rgba(226,192,121,.3);color:var(--gold-light);transition:.35s var(--ease)}
+.unit-chip:hover .u-ico{background:var(--gold);border-color:var(--gold);color:var(--navy-deep)}
+.unit-chip .u-ico svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.unit-chip .u-name{font-family:'Cormorant Garamond',serif;font-size:1.24rem;font-weight:600;color:rgba(255,255,255,.95);
+  line-height:1.2;letter-spacing:.01em;white-space:nowrap}
+
 /* ===== detay: olanaklar bölümü (galeri üstü) ===== */
 .fac-section{max-width:1620px;margin:46px auto 0}
 
@@ -700,52 +719,165 @@ body{
 <script>
 /* ============================================================
    PROJE VERİSİ (TR/EN)  —  metinleri buradan düzenleyebilirsiniz
-   gal: galeri görsel sayısı (banner + galeriN otomatik kurulur)
+   gal:    galeri görsel sayısı (banner + galeriN otomatik kurulur)
+   units:  daire tipleri — düz liste [{tr,en}] veya gruplu [{cat:{tr,en}, items:[{tr,en}]}]
+   facils: olanaklar — 'anahtar' (FAC varsayılan etiketi) veya {ic:'anahtar', tr:'', en:''}
    ============================================================ */
 const PROJECTS = [
   {id:'lacasalia', span:'big',  gal:5,
     name:'La Casalia',
     label:{tr:'Tatlısu · Gazimağusa', en:'Tatlısu · Famagusta'},
     sub:{tr:'Wellness Konsept · 454 Ünite', en:'Wellness Concept · 454 Units'},
-    desc:{tr:'Tatlısu sahilinde, Akdeniz’den ilham alan ve sağlıklı yaşam (wellbeing) üzerine kurgulanmış bir topluluk. Akdeniz manzarasına bakan 454 özenle tasarlanmış ünite; stüdyo, deluxe daireler ve villalardan oluşur. Türk hamamı, spa merkezi, su sporları olanakları, 7/24 güvenlik ve elektrikli araç şarj istasyonlarıyla doğanın içinde dinlendirici bir yaşam sunar.',
-          en:'On the Tatlısu seafront, La Casalia is a wellbeing-focused community inspired by the Mediterranean. Its 454 thoughtfully designed units — studios, deluxe residences and villas — overlook the sea. A Turkish hamam, spa centre, water-sports facilities, 24/7 security and EV charging stations complete a restorative lifestyle in nature.'},
-    tags:{tr:['Wellness Konsept','454 Ünite','Türk Hamamı'], en:['Wellness Concept','454 Units','Turkish Hamam']},
-    facils:['hotel','spa','pool','restaurant','sea','marina','park','walk','concierge']},
+    desc:{tr:'Tatlısu sahilinde, Akdeniz’den ilham alan ve sağlıklı yaşam (wellbeing) üzerine kurgulanmış bir topluluk. 1+1 ve 2+1 deluxe daireler, 3+1 loft’lar ile 2+1 ve 3+1 villalardan oluşan 454 ünite, denize ve 169.000 m²’lik orman alanına bakar. Kendi kumsal plajı, marinası, su sporları merkezi ve 2.500 kişilik amfitiyatrosunun yanı sıra organik tarım ve hobi bahçeleri, bağcılık–şarap üretimi, yoga ve meditasyon alanları, tenis & basketbol sahaları ve 5 özel restoranıyla doğanın içinde bütüncül bir yaşam sunar.',
+          en:'On the Tatlısu seafront, La Casalia is a wellbeing-focused community inspired by the Mediterranean. Its 454 units — 1+1 and 2+1 deluxe residences, 3+1 lofts and 2+1 / 3+1 villas — overlook the sea and 169,000 m² of forest. A private sandy beach, marina, water-sports centre and 2,500-seat amphitheatre are joined by organic farming and hobby gardens, vineyards with wine production, yoga and meditation areas, tennis & basketball courts and five signature restaurants.'},
+    tags:{tr:['Wellness Konsept','454 Ünite','Marina & Plaj'], en:['Wellness Concept','454 Units','Marina & Beach']},
+    units:[
+      {tr:'1+1 Deluxe', en:'1+1 Deluxe'},
+      {tr:'2+1 Deluxe', en:'2+1 Deluxe'},
+      {tr:'2+1 Villa',  en:'2+1 Villa'},
+      {tr:'3+1 Loft',   en:'3+1 Loft'},
+      {tr:'3+1 Villa',  en:'3+1 Villa'}
+    ],
+    facils:[
+      {ic:'beach',      tr:'Kumsal Plaj',                    en:'Sandy Beach'},
+      {ic:'farm',       tr:'Organik Tarım & Hobi Bahçeleri', en:'Organic Farming & Hobby Gardens'},
+      {ic:'yoga',       tr:'Yoga & Meditasyon Alanı',        en:'Yoga & Meditation Area'},
+      {ic:'vineyard',   tr:'Bağcılık & Şarap Üretimi',       en:'Vineyard & Wine Production'},
+      {ic:'forest',     tr:'169.000 m² Orman Alanı',         en:'169,000 m² Forest'},
+      {ic:'restaurant', tr:'5 Özel Restoran',                en:'5 Signature Restaurants'},
+      {ic:'water',      tr:'Su Sporları Merkezi',            en:'Water Sports Centre'},
+      {ic:'amphi',      tr:'2.500 Kişilik Amfitiyatro',      en:'2,500-Seat Amphitheatre'},
+      {ic:'marina',     tr:'Marina',                         en:'Marina'},
+      {ic:'walk',       tr:'8 Km Orman Yolu',                en:'8 km Forest Trail'},
+      {ic:'sports',     tr:'Tenis & Basketbol Alanı',        en:'Tennis & Basketball Courts'}
+    ]},
   {id:'dpoint', span:'big', gal:3,
     name:'D-Point',
     label:{tr:"İskele · Long Beach", en:'İskele · Long Beach'},
     sub:{tr:'All-in-One Yaşam & İş Merkezi · 405 Ünite', en:'All-in-One Living & Business Hub · 405 Units'},
-    desc:{tr:'Yaşam, iş ve sosyalleşmeyi tek çatı altında toplayan “All-in-One” konsept. Long Beach İskele’de, modern bir iş merkeziyle bütünleşen 405 ünite; stüdyodan ferah 2+1 dairelere uzanır ve Akdeniz ışığını içeri taşıyan geniş pencerelerle tasarlanmıştır. Home-office konsepti, aqua park, yüzme havuzu, 7/24 güvenlik ve profesyonel kiralama yönetimi sunar.',
-          en:'An “All-in-One” concept gathering living, work and leisure under one roof. In Long Beach İskele, 405 units integrated with a state-of-the-art business centre range from studios to spacious 2+1 apartments, designed with large windows that draw in the Mediterranean light. It offers a home-office concept, aqua park, swimming pool, 24/7 security and professional rental management.'},
-    tags:{tr:['All-in-One','405 Ünite','İş Merkezi'], en:['All-in-One','405 Units','Business Hub']}},
+    desc:{tr:'Yaşam, iş ve sosyalleşmeyi tek çatı altında toplayan “All-in-One” konsept. Long Beach İskele’de, tam donanımlı bir iş merkeziyle bütünleşen 405 ünite; stüdyo, 1+1 ve 2+1 seçeneklerinden oluşur ve Akdeniz ışığını içeri taşıyan geniş pencerelerle tasarlanmıştır. Konferans salonu, toplantı odaları, eğitim salonu, açık ofis alanı, özel ofisler ve içerik üretim stüdyosu iş tarafını; yüzme havuzu, bar, restoran, kafe, Green Lounge, sosyal lounge, sosyal hub ve ortak mutfak yaşam tarafını karşılar. D-MAR market, Autotrend, otopark ve 7/24 güvenlik site içinde hizmet verir.',
+          en:'An “All-in-One” concept gathering living, work and leisure under one roof. In Long Beach İskele, 405 units integrated with a fully equipped business centre span studios, 1+1 and 2+1 apartments, designed with large windows that draw in the Mediterranean light. A conference hall, meeting rooms, training room, open-plan workspace, private offices and a content production studio serve the work side; a swimming pool, bar, restaurant, coffee shop, Green Lounge, social lounge, social hub and shared kitchen serve the living side. D-MAR market, Autotrend, car park and 24/7 security operate on site.'},
+    tags:{tr:['All-in-One','405 Ünite','İş Merkezi'], en:['All-in-One','405 Units','Business Hub']},
+    units:[
+      {tr:'Stüdyo', en:'Studio'},
+      {tr:'1+1',    en:'1+1'},
+      {tr:'2+1',    en:'2+1'}
+    ],
+    facils:[
+      {ic:'pool',       tr:'Havuz',                   en:'Swimming Pool'},
+      {ic:'kids',       tr:'Oyun Alanı',              en:'Playground'},
+      {ic:'bar',        tr:'Bar',                     en:'Bar'},
+      {ic:'restaurant', tr:'Restoran',                en:'Restaurant'},
+      {ic:'cafe',       tr:'Kafe',                    en:'Coffee Shop'},
+      {ic:'parking',    tr:'Otopark',                 en:'Car Park'},
+      {ic:'security',   tr:'7/24 Güvenlik',           en:'24/7 Security'},
+      {ic:'park',       tr:'Green Lounge',            en:'Green Lounge'},
+      {ic:'lounge',     tr:'Sosyal Lounge',           en:'Social Lounge'},
+      {ic:'kitchen',    tr:'Ortak Mutfak',            en:'Shared Kitchen'},
+      {ic:'hub',        tr:'Sosyal Hub',              en:'Social Hub'},
+      {ic:'conference', tr:'Konferans Salonu',        en:'Conference Hall'},
+      {ic:'meeting',    tr:'Toplantı Odası',          en:'Meeting Room'},
+      {ic:'office',     tr:'Açık Ofis Alanı',         en:'Open-Plan Workspace'},
+      {ic:'edu',        tr:'Eğitim Salonu',           en:'Training Room'},
+      {ic:'studio',     tr:'İçerik Üretim Stüdyosu',  en:'Content Production Studio'},
+      {ic:'office',     tr:'Özel Ofisler',            en:'Private Offices'},
+      {ic:'car',        tr:'Autotrend',               en:'Autotrend'},
+      {ic:'market',     tr:'D-MAR',                   en:'D-MAR'}
+    ]},
   {id:'natulux', span:'std', gal:4,
     name:'Natulux',
     label:{tr:'Küçük Erenköy · Gazimağusa', en:'Küçük Erenköy · Famagusta'},
     sub:{tr:'Denize Sıfır Butik · 97 Ünite', en:'Seafront Boutique · 97 Units'},
-    desc:{tr:'Küçük Erenköy, Tatlısu’da denize sıfır konumlanan butik bir proje. Kademeli mimarisiyle her üniteye panoramik Akdeniz manzarası sunan Natulux; 1+1, 2+1, 3+1 daireler, penthouse’lar ve villalardan oluşan toplam 97 üniteden oluşur. Yüzme havuzları, Türk hamamı, fitness merkezi, 7/24 güvenlik ve özel plaj erişimiyle eko-bilinçli bir lüks sunar.',
-          en:'A boutique seafront development in Küçük Erenköy, Tatlısu. Natulux’s tiered architecture grants every home a panoramic Mediterranean view, across 97 units spanning 1+1, 2+1 and 3+1 apartments, penthouses and villas. Swimming pools, a Turkish bath, gym, 24/7 security and private beach access define its eco-conscious luxury.'},
-    tags:{tr:['Denize Sıfır','97 Ünite','Butik'], en:['Seafront','97 Units','Boutique']}},
+    desc:{tr:'Küçük Erenköy, Tatlısu’da denize sıfır konumlanan butik bir proje. Kademeli mimarisiyle her üniteye panoramik Akdeniz manzarası sunan Natulux; 1+1 ve 3+1 garden daireler, 2+1 loft, 3+1 penthouse ile 3+1 ve 4+1 villalardan oluşan toplam 97 üniteyi kapsar. Hidroterapi duşu, sağlıklı yaşam havuzu, spa & wellness, yoga ve meditasyon alanları, mini golf, barbekü alanı, açık hava sineması ve su sporlarıyla eko-bilinçli bir lüks sunar.',
+          en:'A boutique seafront development in Küçük Erenköy, Tatlısu. Natulux’s tiered architecture grants every home a panoramic Mediterranean view, across 97 units spanning 1+1 and 3+1 garden apartments, 2+1 lofts, 3+1 penthouses and 3+1 / 4+1 villas. A hydrotherapy shower, wellbeing pool, spa & wellness centre, yoga and meditation areas, mini golf, BBQ area, open-air cinema and water sports define its eco-conscious luxury.'},
+    tags:{tr:['Denize Sıfır','97 Ünite','Butik'], en:['Seafront','97 Units','Boutique']},
+    units:[
+      {tr:'1+1 Garden',    en:'1+1 Garden'},
+      {tr:'2+1 Loft',      en:'2+1 Loft'},
+      {tr:'3+1 Garden',    en:'3+1 Garden'},
+      {tr:'3+1 Penthouse', en:'3+1 Penthouse'},
+      {tr:'3+1 Villa',     en:'3+1 Villa'},
+      {tr:'4+1 Villa',     en:'4+1 Villa'}
+    ],
+    facils:[
+      {ic:'hydro',    tr:'Hidroterapi Duşu',      en:'Hydrotherapy Shower'},
+      {ic:'pool',     tr:'Havuz',                 en:'Swimming Pool'},
+      {ic:'spa',      tr:'Spa & Wellness',        en:'Spa & Wellness'},
+      {ic:'yoga',     tr:'Yoga & Meditasyon',     en:'Yoga & Meditation'},
+      {ic:'golf',     tr:'Mini Golf',             en:'Mini Golf'},
+      {ic:'bbq',      tr:'Barbekü Alanı',         en:'BBQ Area'},
+      {ic:'wellness', tr:'Sağlıklı Yaşam Havuzu', en:'Wellbeing Pool'},
+      {ic:'cinema',   tr:'Açık Hava Sineması',    en:'Open-Air Cinema'},
+      {ic:'water',    tr:'Su Sporları',           en:'Water Sports'}
+    ]},
   {id:'quarencia', span:'std', gal:3,
     name:'Querencia',
     label:{tr:'İskele · Long Beach', en:'İskele · Long Beach'},
     sub:{tr:'5★ Resort Rezidans · 705 Ünite', en:'5★ Resort Residence · 705 Units'},
-    desc:{tr:'İskele’de, Long Beach’in tam karşısında deniz kenarında bir lüks Akdeniz topluluğu. Querencia; stüdyo, 1, 2 ve 3 yatak odalı daireler ile dubleks ve penthouse’lardan oluşan 705 üniteyi dört blokta toplar. Çatı katı sonsuzluk havuzu, wellness merkezi, aqua park, restoran ve 7/24 concierge ile 5 yıldızlı bir resort deneyimi sunar. Tüm üniteler profesyonel kiralama sistemine dahildir.',
-          en:'A luxury Mediterranean community on the seafront in İskele, directly across from Long Beach. Querencia gathers 705 units — studios, one, two and three-bedroom apartments, duplexes and penthouses — across four blocks. A rooftop infinity pool, wellness centre, aqua park, restaurant and 24/7 concierge deliver a five-star resort experience, with every unit enrolled in professional rental management.'},
-    tags:{tr:['5★ Resort','705 Ünite','4 Blok'], en:['5★ Resort','705 Units','4 Blocks']}},
+    desc:{tr:'İskele’de, Long Beach’in tam karşısında deniz kenarında bir lüks Akdeniz topluluğu. Querencia; stüdyo, 1+1, 2+1 ve 3+1 daireler ile 5+1 dubleks ve 5+1 penthouse’lardan oluşan 705 üniteyi dört blokta toplar. 180° kesintisiz deniz manzarası, özel havuzlu penthouse daireler, yerden ısıtma ve gizli kanal soğutma standarttır. TAROT Beach Club, wellness kulübü, güzellik merkezi, endemik bitki peyzajı ve dört blok boyunca yayılan restoran, bar, market ve mağazalarla 5 yıldızlı bir resort deneyimi sunar. Tüm üniteler profesyonel kiralama sistemine dahildir.',
+          en:'A luxury Mediterranean community on the seafront in İskele, directly across from Long Beach. Querencia gathers 705 units — studios, 1+1, 2+1 and 3+1 apartments plus 5+1 duplexes and 5+1 penthouses — across four blocks. Uninterrupted 180° sea views, penthouses with private pools, underfloor heating and concealed duct cooling come as standard. The TAROT Beach Club, wellness club, beauty centre, endemic planting and the restaurants, bars, market and shops spread across the four blocks deliver a five-star resort experience, with every unit enrolled in professional rental management.'},
+    tags:{tr:['5★ Resort','705 Ünite','4 Blok'], en:['5★ Resort','705 Units','4 Blocks']},
+    units:[
+      {tr:'Stüdyo',        en:'Studio'},
+      {tr:'1+1',           en:'1+1'},
+      {tr:'2+1',           en:'2+1'},
+      {tr:'3+1',           en:'3+1'},
+      {tr:'5+1 Duplex',    en:'5+1 Duplex'},
+      {tr:'5+1 Penthouse', en:'5+1 Penthouse'}
+    ],
+    facils:[
+      {ic:'view',     tr:'180° Kesintisiz Deniz Manzarası', en:'180° Uninterrupted Sea View'},
+      {ic:'pool',     tr:'Özel Havuzlu Penthouse Daireler', en:'Penthouses with Private Pool'},
+      {ic:'park',     tr:'Geniş Yeşil Alanlar',             en:'Extensive Green Areas'},
+      {ic:'botanic',  tr:'Endemik Bitki Peyzajı',           en:'Endemic Planting'},
+      {ic:'shop',     tr:'Ticari Alanlar',                  en:'Retail Units'},
+      {ic:'cool',     tr:'Gizli Kanal Soğutma',             en:'Concealed Duct Cooling'},
+      {ic:'heat',     tr:'Yerden Isıtma',                   en:'Underfloor Heating'},
+      {ic:'sup',      tr:'Beach Paddling & SUP',            en:'Beach Paddling & SUP'},
+      {ic:'beach',    tr:'TAROT Beach Club',                en:'TAROT Beach Club'},
+      {ic:'wellness', tr:'Wellness Kulübü',                 en:'Wellness Club'},
+      {ic:'beauty',   tr:'Güzellik Merkezi',                en:'Beauty Centre'}
+    ]},
   {id:'platinum', span:'std', gal:4,
     name:'Courtyard Platinum',
     label:{tr:'Long Beach · İskele', en:'Long Beach · İskele'},
     sub:{tr:'Resort Yaşam · 952 Rezidans', en:'Resort Living · 952 Residences'},
-    desc:{tr:'Courtyard ailesinin premium imzası. İskele Long Beach bölgesinde 952 rezidanstan oluşan, resort yaşam tarzını benimseyen seçkin bir proje. Stüdyodan 3+1 dublekslere uzanan üniteler; havuzlar, spa, aqua park ve 7/24 güvenlikle estetiği işlevsellikle birleştirir. Peyzajlı bahçeler ve profesyonel kiralama yönetimiyle istikrarlı yatırım getirisi sağlar.',
-          en:'The premium signature of the Courtyard family. A distinguished resort-lifestyle development of 952 residences in İskele’s Long Beach area. Units from studios to 3+1 duplexes pair aesthetics with functionality, served by pools, spa, aqua park and 24/7 security. Landscaped gardens and professional rental management ensure sustained investment returns.'},
-    tags:{tr:['Resort Yaşam','952 Rezidans','Aqua Park'], en:['Resort Living','952 Residences','Aqua Park']}},
+    desc:{tr:'Courtyard ailesinin premium imzası. İskele Long Beach bölgesinde 952 rezidanstan oluşan, resort yaşam tarzını benimseyen seçkin bir proje. Stüdyo, 1+1, 1+1 dubleks ve 2+1 dubleks üniteler estetiği işlevsellikle birleştirir. Padel kortu ve açık spor kompleksi, sushi bar, ocakbaşı, spor barı, all day dining restoran, kafe ve süpermarket site içinde hizmet verir. Ofisler, kafe ofisi ve Döveç Bakım Ofisi ile profesyonel kiralama yönetimi istikrarlı yatırım getirisi sağlar.',
+          en:'The premium signature of the Courtyard family. A distinguished resort-lifestyle development of 952 residences in İskele’s Long Beach area. Studios, 1+1, 1+1 duplex and 2+1 duplex units pair aesthetics with functionality. A padel court and outdoor sports complex, sushi bar, grill house, sports bar, all-day dining restaurant, coffee shop and supermarket serve the site. Offices, a café office and the Döveç Maintenance Office support professional rental management and sustained investment returns.'},
+    tags:{tr:['Resort Yaşam','952 Rezidans','Padel & Spor'], en:['Resort Living','952 Residences','Padel & Sports']},
+    units:[
+      {tr:'Stüdyo',     en:'Studio'},
+      {tr:'1+1',        en:'1+1'},
+      {tr:'1+1 Duplex', en:'1+1 Duplex'},
+      {tr:'2+1 Duplex', en:'2+1 Duplex'}
+    ],
+    facils:[
+      {ic:'cafe',       tr:'Kafe',                  en:'Coffee Shop'},
+      {ic:'market',     tr:'Süpermarket',           en:'Supermarket'},
+      {ic:'office',     tr:'Döveç Bakım Ofisi',     en:'Döveç Maintenance Office'},
+      {ic:'lounge',     tr:'Kafe Ofisi',            en:'Café Office'},
+      {ic:'office',     tr:'Ofis',                  en:'Office'},
+      {ic:'sushi',      tr:'Sushi Bar',             en:'Sushi Bar'},
+      {ic:'restaurant', tr:'Restoran',              en:'Restaurant'},
+      {ic:'bar',        tr:'Spor Barı',             en:'Sports Bar'},
+      {ic:'grill',      tr:'Ocakbaşı',              en:'Ocakbaşı Grill'},
+      {ic:'restaurant', tr:'All Day Dining Restoran', en:'All Day Dining Restaurant'},
+      {ic:'padel',      tr:'Padel Pitch',           en:'Padel Pitch'},
+      {ic:'sports',     tr:'Açık Spor Kompleksi',   en:'Outdoor Sports Complex'}
+    ]},
   {id:'laisla', span:'std', gal:18,
     name:'La Isla',
     label:{tr:'Ötüken · Long Beach', en:'Ötüken · Long Beach'},
     sub:{tr:'Yatay Mimari · 210 Ünite', en:'Horizontal Architecture · 210 Units'},
-    desc:{tr:'Long Beach bölgesi, Ötüken’de çevreye duyarlı bir yaşam projesi. “Yatay mimari” anlayışıyla tasarlanan La Isla; 2+1 loftlar, 3+1 daireler ve 3+1’den 5+1’e villalar olmak üzere 210 üniteden oluşur. Yeşil enerji ve çevre dostu malzemelerle sürdürülebilirliği önceler. Havuzlar, fitness, spa, 7/24 güvenlik ve evcil hayvan dostu olanaklar sunar.',
-          en:'An eco-conscious community in Ötüken, Long Beach. Designed around “horizontal architecture”, La Isla comprises 210 units — 2+1 lofts, 3+1 apartments and 3+1 to 5+1 villas — prioritising sustainability through green energy and eco-friendly materials. Pools, a gym, spa, 24/7 security and pet-friendly facilities complete the offering.'},
-    tags:{tr:['Yatay Mimari','210 Ünite','Villa & Loft'], en:['Horizontal Design','210 Units','Villas & Lofts']}},
+    desc:{tr:'Long Beach bölgesi, Ötüken’de çevreye duyarlı bir yaşam projesi. “Yatay mimari” anlayışıyla tasarlanan La Isla; 2+1, 3+1, 4+1 ve 5+1 daire tiplerinden oluşan 210 üniteyi kapsar. Yeşil enerji ve çevre dostu malzemelerle sürdürülebilirliği önceler. Site içinde spor salonu, süpermarket, kasap, eczane, Döveç Bakım Ofisi, kafe, restoran, spor barı ile ocakbaşı & meze günlük yaşamın tamamını kapı önüne getirir.',
+          en:'An eco-conscious community in Ötüken, Long Beach. Designed around “horizontal architecture”, La Isla comprises 210 units in 2+1, 3+1, 4+1 and 5+1 layouts, prioritising sustainability through green energy and eco-friendly materials. An on-site gym, supermarket, butcher, pharmacy, Döveç Maintenance Office, coffee shop, restaurant, sports bar and ocakbaşı & meze bring daily life to the doorstep.'},
+    tags:{tr:['Yatay Mimari','210 Ünite','Site İçi Çarşı'], en:['Horizontal Design','210 Units','On-Site Arcade']},
+    units:[
+      {tr:'2+1 Daire', en:'2+1 Apartment'},
+      {tr:'3+1 Daire', en:'3+1 Apartment'},
+      {tr:'4+1 Daire', en:'4+1 Apartment'},
+      {tr:'5+1 Daire', en:'5+1 Apartment'}
+    ]},
   {id:'skysakarya', span:'std', gal:3,
     name:'Sky Sakarya',
     label:{tr:'Gazimağusa · KKTC', en:'Famagusta · TRNC'},
@@ -757,37 +889,134 @@ const PROJECTS = [
     name:'Four Seasons Life 2',
     label:{tr:'İskele · Hazır Teslim', en:'İskele · Ready to Move'},
     sub:{tr:'Denize Sıfır · 329 Ünite', en:'Seafront · 329 Units'},
-    desc:{tr:'İskele sahil şeridinde, modern lüksü Akdeniz’in doğal güzelliğiyle uyumla buluşturan denize sıfır bir topluluk. 329 üniteden oluşan Four Seasons Life 2; su sporları, aqua park, spa merkezi, yüzme havuzu, fitness ve 7/24 güvenlik sunar. Profesyonel kiralama yönetimiyle yüksek getiri arayan yatırımcılar için idealdir.',
-          en:'A seafront community on the İskele shoreline, blending modern luxury with the natural beauty of the coast. With 329 units, Four Seasons Life 2 offers water sports, an aqua park, spa centre, swimming pool, gym and 24/7 security. Professional rental management makes it ideal for investors seeking high-yield seaside property.'},
-    tags:{tr:['Denize Sıfır','329 Ünite','Hazır Teslim'], en:['Seafront','329 Units','Ready']}},
+    desc:{tr:'İskele sahil şeridinde, modern lüksü Akdeniz’in doğal güzelliğiyle uyumla buluşturan denize sıfır bir topluluk. Stüdyo, 1+1, 1+1 loft ve 2+1 seçenekleriyle 329 üniteden oluşan Four Seasons Life 2; aqua park, Seasons Restoran, havuz barı ve kumsal barı, spa, spor salonu, su sporları, çocuk oyun alanı ile yürüyüş ve bisiklet yollarını bir arada sunar. Profesyonel kiralama yönetimiyle yüksek getiri arayan yatırımcılar için idealdir.',
+          en:'A seafront community on the İskele shoreline, blending modern luxury with the natural beauty of the coast. With 329 units across studios, 1+1, 1+1 loft and 2+1 layouts, Four Seasons Life 2 brings together an aqua park, Seasons Restaurant, pool and beach bars, spa, gym, water sports, a kids playground and walking & cycling tracks. Professional rental management makes it ideal for investors seeking high-yield seaside property.'},
+    tags:{tr:['Denize Sıfır','329 Ünite','Hazır Teslim'], en:['Seafront','329 Units','Ready']},
+    units:[
+      {tr:'Stüdyo',   en:'Studio'},
+      {tr:'1+1',      en:'1+1'},
+      {tr:'1+1 Loft', en:'1+1 Loft'},
+      {tr:'2+1',      en:'2+1'}
+    ],
+    facils:[
+      {ic:'restaurant', tr:'Seasons Restoran',   en:'Seasons Restaurant'},
+      {ic:'bar',        tr:'Havuz Bar',          en:'Pool Bar'},
+      {ic:'bar',        tr:'Kumsal Bar',         en:'Beach Bar'},
+      {ic:'aqua',       tr:'Aqua Park',          en:'Aqua Park'},
+      {ic:'walk',       tr:'Yürüyüş Yolu',       en:'Walking Track'},
+      {ic:'kids',       tr:'Çocuk Oyun Alanı',   en:'Kids Playground'},
+      {ic:'spa',        tr:'Spa',                en:'Spa'},
+      {ic:'bike',       tr:'Bisiklet Yolu',      en:'Cycling Track'},
+      {ic:'gym',        tr:'Spor Salonu',        en:'Gym'},
+      {ic:'water',      tr:'Su Sporları',        en:'Water Sports'}
+    ]},
   {id:'fourseasons', span:'wide', gal:4,
     name:'Four Seasons Life',
     label:{tr:'İskele · Deniz Cephesi', en:'İskele · Seafront'},
     sub:{tr:'Tamamlanmış Sahil Topluluğu', en:'Completed Beachfront Community'},
-    desc:{tr:'İskele’de, özel plaj erişimine sahip tamamlanmış ve yaşayan bir sahil topluluğu. Four Seasons Life I, Akdeniz yaşam tarzını sunan köklü bir proje; yüzme havuzları, peyzajlı alanlar, çocuk oyun parkı, 7/24 güvenlik ve sosyal olanaklar içerir. Site içinde işleyen profesyonel kiralama yönetim sistemi, ev sahiplerine istikrarlı getiri ve bakım sağlar.',
-          en:'A completed, thriving beachfront community in İskele with private beach access. Four Seasons Life I is a well-established project offering a Mediterranean lifestyle, with swimming pools, landscaped grounds, a children’s playground, 24/7 security and social facilities. An on-site professional rental management system provides owners with consistent returns and maintenance.'},
-    tags:{tr:['Deniz Cephesi','Özel Plaj','Tamamlandı'], en:['Seafront','Private Beach','Completed']}},
+    desc:{tr:'İskele’de, özel plaj erişimine sahip tamamlanmış ve yaşayan bir sahil topluluğu. Four Seasons Life I; stüdyo, 1+1, 1+1 loft, 2+1 bahçe katı ve 2+1 çatı teraslı daireler ile 2+1 ve 3+1 yarı müstakil villaları — denize sıfır, özel havuzlu 3+1 villalar dahil — bir arada sunar. Aqua park, Seasons Restoran, havuz ve kumsal barları, spa, spor salonu, su sporları, çocuk oyun alanı, yürüyüş ve bisiklet yollarıyla Akdeniz yaşam tarzını tamamlar. Site içinde işleyen profesyonel kiralama yönetim sistemi, ev sahiplerine istikrarlı getiri ve bakım sağlar.',
+          en:'A completed, thriving beachfront community in İskele with private beach access. Four Seasons Life I brings together studios, 1+1, 1+1 loft, 2+1 garden-floor and 2+1 roof-terrace apartments alongside 2+1 and 3+1 semi-detached villas — including seafront 3+1 villas with private pools. An aqua park, Seasons Restaurant, pool and beach bars, spa, gym, water sports, kids playground and walking & cycling tracks complete the Mediterranean lifestyle. An on-site professional rental management system provides owners with consistent returns and maintenance.'},
+    tags:{tr:['Deniz Cephesi','Özel Plaj','Tamamlandı'], en:['Seafront','Private Beach','Completed']},
+    units:[
+      {cat:{tr:'Daireler', en:'Apartments'}, items:[
+        {tr:'Stüdyo',             en:'Studio'},
+        {tr:'1+1',                en:'1+1'},
+        {tr:'1+1 Loft',           en:'1+1 Loft'},
+        {tr:'2+1 Bahçe Katı',     en:'2+1 Garden Floor'},
+        {tr:'2+1 Çatı Teraslı',   en:'2+1 Roof Terrace'}
+      ]},
+      {cat:{tr:'Villalar', en:'Villas'}, items:[
+        {tr:'2+1 Yarı Müstakil Villa',                            en:'2+1 Semi-Detached Villa'},
+        {tr:'3+1 Bahçeli Yarı Müstakil Villa',                    en:'3+1 Semi-Detached Villa with Garden'},
+        {tr:'3+1 Denize Sıfır, Özel Havuzlu Yarı Müstakil Villa', en:'3+1 Seafront Semi-Detached Villa with Private Pool'}
+      ]}
+    ],
+    facils:[
+      {ic:'kids',       tr:'Çocuk Oyun Alanı',   en:'Kids Playground'},
+      {ic:'spa',        tr:'SPA',                en:'Spa'},
+      {ic:'bike',       tr:'Bisiklet Yolu',      en:'Cycling Track'},
+      {ic:'gym',        tr:'Spor Salonu',        en:'Gym'},
+      {ic:'water',      tr:'Su Sporları',        en:'Water Sports'},
+      {ic:'restaurant', tr:'Seasons Restoran',   en:'Seasons Restaurant'},
+      {ic:'bar',        tr:'Havuz Bar',          en:'Pool Bar'},
+      {ic:'bar',        tr:'Kumsal Bar',         en:'Beach Bar'},
+      {ic:'aqua',       tr:'Aqua Park',          en:'Aqua Park'},
+      {ic:'walk',       tr:'Yürüyüş Yolu',       en:'Walking Track'}
+    ]},
   {id:'panorama', span:'wide', gal:2,
     name:'Panorama',
     label:{tr:'İskele · KKTC', en:'İskele · TRNC'},
     sub:{tr:'Kentsel Yaşam · Tamamlandı', en:'Urban Living · Completed'},
-    desc:{tr:'İskele’de tamamlanmış bir lüks konut projesi. “Yeniden tanımlanan şehir yaşamı” anlayışıyla Panorama; stüdyo ile bir, iki ve üç yatak odalı daireler sunar. Açık yüzme havuzu, fitness merkezi, çocuk oyun parkı, yürüyüş parkuru ve peyzajlı alanlarla resort konforunu merkezî konumla birleştirir. 7/24 güvenlik ve profesyonel bakım sağlar.',
-          en:'A completed luxury residential development in İskele. Embracing “city living, redefined”, Panorama offers studios and one, two and three-bedroom apartments. An outdoor pool, fitness centre, children’s playground, walking track and landscaped grounds combine resort comfort with a central location, backed by 24/7 security and professional maintenance.'},
-    tags:{tr:['Kentsel','Resort Konfor','Tamamlandı'], en:['Urban','Resort Comfort','Completed']}},
+    desc:{tr:'İskele’de tamamlanmış bir lüks konut projesi. “Yeniden tanımlanan şehir yaşamı” anlayışıyla Panorama; stüdyo, 1+1, 2+1 ve 3+1 daire seçenekleri sunar. The SUITE Rooftop Bar, Delicious Panorama restoranı, yüzme havuzu, fitness merkezi, sauna ve çocuk oyun alanıyla resort konforunu merkezî konumla birleştirir. 7/24 güvenlik ve profesyonel bakım sağlar.',
+          en:'A completed luxury residential development in İskele. Embracing “city living, redefined”, Panorama offers studio, 1+1, 2+1 and 3+1 apartments. The SUITE Rooftop Bar, Delicious Panorama restaurant, swimming pool, fitness centre, sauna and kids playground combine resort comfort with a central location, backed by 24/7 security and professional maintenance.'},
+    tags:{tr:['Kentsel','Rooftop Bar','Tamamlandı'], en:['Urban','Rooftop Bar','Completed']},
+    units:[
+      {tr:'Stüdyo', en:'Studio'},
+      {tr:'1+1',    en:'1+1'},
+      {tr:'2+1',    en:'2+1'},
+      {tr:'3+1',    en:'3+1'}
+    ],
+    facils:[
+      {ic:'bar',        tr:'The SUITE Rooftop Bar', en:'The SUITE Rooftop Bar'},
+      {ic:'restaurant', tr:'Delicious Panorama',    en:'Delicious Panorama'},
+      {ic:'gym',        tr:'Fitness',               en:'Fitness'},
+      {ic:'kids',       tr:'Çocuk Oyun Alanı',      en:'Kids Playground'},
+      {ic:'sauna',      tr:'Sauna',                 en:'Sauna'},
+      {ic:'pool',       tr:'Havuz',                 en:'Swimming Pool'}
+    ]},
   {id:'fs3', span:'wide', gal:0,
     name:'Four Seasons Life 3',
     label:{tr:'İskele · Deniz Cephesi', en:'İskele · Seafront'},
     sub:{tr:'Deniz Cephesi · 738 Ünite', en:'Seafront · 738 Units'},
-    desc:{tr:'İskele’de denize sıfır bir yaşam projesi. “Açık alanlar ve mavi ufuklar” temasıyla Four Seasons Life III; stüdyo, bir ve iki yatak odalı dairelerden oluşan 738 üniteyi kapsar. Aqua park, yüzme havuzları, restoranlar, fitness merkezleri ve 7/24 güvenlik sunar. Profesyonel kiralama yönetimiyle yatırımcılara uygundur.',
-          en:'A direct-to-sea development in İskele. Themed around “open spaces and blue horizons”, Four Seasons Life III spans 738 units of studios, one and two-bedroom apartments. It offers an aqua park, swimming pools, restaurants, fitness centres and 24/7 security, with professional rental management for investors.'},
-    tags:{tr:['Deniz Cephesi','738 Ünite','Aqua Park'], en:['Seafront','738 Units','Aqua Park']}},
+    desc:{tr:'İskele’de denize sıfır bir yaşam projesi. “Açık alanlar ve mavi ufuklar” temasıyla Four Seasons Life III; stüdyo, 1+1, 1+1 loft, 2+1 ve 3+1 dairelerden oluşan 738 üniteyi kapsar. Aqua park, havuz ve kumsal barları, spa, spor salonu, su sporları, çocuk oyun alanı ile yürüyüş ve bisiklet yolları sunar. Profesyonel kiralama yönetimiyle yatırımcılara uygundur.',
+          en:'A direct-to-sea development in İskele. Themed around “open spaces and blue horizons”, Four Seasons Life III spans 738 units across studio, 1+1, 1+1 loft, 2+1 and 3+1 layouts. It offers an aqua park, pool and beach bars, spa, gym, water sports, a kids playground and walking & cycling tracks, with professional rental management for investors.'},
+    tags:{tr:['Deniz Cephesi','738 Ünite','Aqua Park'], en:['Seafront','738 Units','Aqua Park']},
+    units:[
+      {tr:'Stüdyo',   en:'Studio'},
+      {tr:'1+1',      en:'1+1'},
+      {tr:'1+1 Loft', en:'1+1 Loft'},
+      {tr:'2+1',      en:'2+1'},
+      {tr:'3+1',      en:'3+1'}
+    ],
+    facils:[
+      {ic:'bar',   tr:'Havuz Bar',        en:'Pool Bar'},
+      {ic:'bar',   tr:'Kumsal Bar',       en:'Beach Bar'},
+      {ic:'aqua',  tr:'Aqua Park',        en:'Aqua Park'},
+      {ic:'walk',  tr:'Yürüyüş Yolu',     en:'Walking Track'},
+      {ic:'kids',  tr:'Çocuk Oyun Alanı', en:'Kids Playground'},
+      {ic:'spa',   tr:'Spa',              en:'Spa'},
+      {ic:'bike',  tr:'Bisiklet Yolu',    en:'Cycling Track'},
+      {ic:'gym',   tr:'Spor Salonu',      en:'Gym'},
+      {ic:'water', tr:'Su Sporları',      en:'Water Sports'}
+    ]},
   {id:'clb', span:'wide', gal:0,
     name:'Courtyard Long Beach',
     label:{tr:'Long Beach · İskele', en:'Long Beach · İskele'},
     sub:{tr:'5★ Resort Rezidans · Tamamlandı', en:'5★ Resort Residence · Completed'},
-    desc:{tr:'İskele’de tamamlanmış, ödüllü bir lüks konut projesi. Courtyard Long Beach; stüdyo, 1+1 ve 2+1 daire seçenekleriyle “5 yıldızlı resort atmosferi” sunar. Yüzme havuzları, spa olanakları, aqua park, Türk hamamı ve 7/24 güvenlik içerir. Topluluk yaşamını önceleyen proje, profesyonel kiralama yönetimiyle yatırım getirisini destekler.',
-          en:'A completed, award-winning luxury development in İskele. Courtyard Long Beach offers a “5-star resort atmosphere” across studios, 1+1 and 2+1 apartments. Amenities include swimming pools, spa facilities, an aqua park, Turkish bath and 24/7 security. Emphasising community living, the project supports investment returns through professional rental management.'},
-    tags:{tr:['5★ Resort','Ödüllü','Tamamlandı'], en:['5★ Resort','Award-Winning','Completed']}}
+    desc:{tr:'İskele’de tamamlanmış, ödüllü bir lüks konut projesi. Courtyard Long Beach; stüdyo, 1+1, 2+1, 2+1 penthouse ve 3+1 seçenekleriyle “5 yıldızlı resort atmosferi” sunar. Aqua park, kapalı havuz, SPA, Türk hamamı, güzellik merkezi, fitness, mini golf, Kids Club ve çocuk oyun alanının yanı sıra Delicious restoranı, Score Bar ve D-MAR Market site içinde hizmet verir. Topluluk yaşamını önceleyen proje, profesyonel kiralama yönetimiyle yatırım getirisini destekler.',
+          en:'A completed, award-winning luxury development in İskele. Courtyard Long Beach offers a “5-star resort atmosphere” across studios, 1+1, 2+1, 2+1 penthouse and 3+1 layouts. An aqua park, indoor pool, spa, Turkish hamam, beauty centre, fitness centre, mini golf, Kids Club and kids playground are joined on site by the Delicious restaurant, Score Bar and D-MAR Market. Emphasising community living, the project supports investment returns through professional rental management.'},
+    tags:{tr:['5★ Resort','Ödüllü','Tamamlandı'], en:['5★ Resort','Award-Winning','Completed']},
+    units:[
+      {tr:'Stüdyo',        en:'Studio'},
+      {tr:'1+1',           en:'1+1'},
+      {tr:'2+1',           en:'2+1'},
+      {tr:'2+1 Penthouse', en:'2+1 Penthouse'},
+      {tr:'3+1',           en:'3+1'}
+    ],
+    facils:[
+      {ic:'restaurant', tr:'Delicious',          en:'Delicious'},
+      {ic:'kidsclub',   tr:'Kids Club',          en:'Kids Club'},
+      {ic:'kids',       tr:'Çocuk Oyun Alanı',   en:'Kids Playground'},
+      {ic:'market',     tr:'D-MAR Market',       en:'D-MAR Market'},
+      {ic:'gym',        tr:'Fitness',            en:'Fitness'},
+      {ic:'aqua',       tr:'Aqua Park',          en:'Aqua Park'},
+      {ic:'golf',       tr:'Mini Golf',          en:'Mini Golf'},
+      {ic:'bar',        tr:'Score Bar',          en:'Score Bar'},
+      {ic:'spa',        tr:'SPA',                en:'Spa'},
+      {ic:'hamam',      tr:'Türk Hamamı',        en:'Turkish Hamam'},
+      {ic:'indoorpool', tr:'Kapalı Havuz',       en:'Indoor Pool'},
+      {ic:'beauty',     tr:'Güzellik Merkezi',   en:'Beauty Centre'}
+    ]}
 ];
 
 /* ---- proje galerileri: "16-9 görseller" klasöründeki gerçek dosyalar ---- */
@@ -824,6 +1053,7 @@ const I18N = {
   watch:{tr:'İZLE', en:'WATCH'},
   scroll:{tr:'Kaydır', en:'Scroll'},
   detailsTitle:{tr:'Proje Detayları', en:'Project Details'},
+  unitsTitle:{tr:'Daire Tipleri', en:'Unit Types'},
   facilsTitle:{tr:'Olanaklar', en:'Facilities'},
   moreInfo:{tr:'Daha Fazla Bilgi', en:'More Information'},
   moreInfoNote:{tr:'Ayrıntılı bilgi için web sitemizi ziyaret edin', en:'Visit our website for more details'},
@@ -854,21 +1084,107 @@ const ICONS = {
   book:`<svg viewBox="0 0 24 24"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v16H6.5A2.5 2.5 0 0 0 4 20.5z"/><line x1="9" y1="6" x2="16" y2="6"/><line x1="9" y1="9.5" x2="16" y2="9.5"/></svg>`,
   map:`<svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.6"/></svg>`
 };
-/* olanak ikonları + etiketleri */
+/* olanak ikonları + varsayılan etiketleri
+   Kullanım: facils:['pool'] → ikon+varsayılan etiket
+             facils:[{ic:'bar', tr:'Havuz Bar', en:'Pool Bar'}] → ikon + projeye özel etiket */
 const FAC = {
+  /* konaklama & wellness */
   hotel:{ic:`<path d="M3 20V8l9-4 9 4v12"/><path d="M9 20v-5h6v5"/>`, tr:'5★ Wellness Otel', en:'5★ Wellness Hotel'},
   spa:{ic:`<path d="M12 21c4-2 6-5 6-9 0-3-2-5-2-5s-2 1-3 3c-1-3-1-7-1-7s-3 3-3 8c0 1 .2 2 .5 3"/><path d="M4 13c2 0 4 2 5 5"/>`, tr:'Spa & Wellness', en:'Spa & Wellness'},
-  pool:{ic:`<path d="M3 18c1.5 0 1.5 1 3 1s1.5-1 3-1 1.5 1 3 1 1.5-1 3-1 1.5 1 3 1 1.5-1 3-1"/><path d="M7 14V6a2 2 0 0 1 4 0M13 14V6a2 2 0 0 1 4 0"/>`, tr:'Açık Yüzme Havuzu', en:'Outdoor Pool'},
-  gym:{ic:`<path d="M6.5 6.5l11 11M4 9l-1.5 1.5 2 2M20 15l1.5-1.5-2-2M9 4L7.5 5.5M15 20l1.5-1.5"/>`, tr:'Fitness Merkezi', en:'Fitness Centre'},
-  restaurant:{ic:`<path d="M6 3v7a2 2 0 0 0 4 0V3M8 10v11M18 3c-1.5 0-2.5 2-2.5 5s1 4 2.5 4v9"/>`, tr:'À la Carte Restoran', en:'À la Carte Dining'},
+  wellness:{ic:`<path d="M12 20.5S4 16 4 10.2A4.2 4.2 0 0 1 12 8a4.2 4.2 0 0 1 8 2.2c0 5.8-8 10.3-8 10.3z"/>`, tr:'Wellness Kulübü', en:'Wellness Club'},
+  hamam:{ic:`<path d="M4 20h16M6 20v-6a6 6 0 0 1 12 0v6"/><path d="M9 6.5c0-1.4 1.5-1.6 1.5-3M13.5 6.5c0-1.4 1.5-1.6 1.5-3"/>`, tr:'Türk Hamamı', en:'Turkish Hamam'},
+  sauna:{ic:`<path d="M3.5 20h17V9.5l-8.5-5-8.5 5z"/><path d="M9 15c0-1.3 1.4-1.6 1.4-3M13.6 15c0-1.3 1.4-1.6 1.4-3"/>`, tr:'Sauna', en:'Sauna'},
+  hydro:{ic:`<path d="M6 3h8v3H6z"/><path d="M10 6v4"/><path d="M7 13.5v.01M10 13v.01M13 13.5v.01M8.5 17v.01M11.5 17v.01M10 20.5v.01"/><path d="M5 10.5h10"/>`, tr:'Hidroterapi Duşu', en:'Hydrotherapy Shower'},
+  beauty:{ic:`<path d="M12 3v6M9.5 5.5L12 9l2.5-3.5"/><path d="M8 9h8l-1 12H9z"/>`, tr:'Güzellik Merkezi', en:'Beauty Centre'},
+  yoga:{ic:`<path d="M12 5.5a1.6 1.6 0 1 0 0-3.2 1.6 1.6 0 0 0 0 3.2z"/><path d="M12 8v5M12 13l-4 6M12 13l4 6M6.5 10.5L12 9l5.5 1.5"/>`, tr:'Yoga & Meditasyon', en:'Yoga & Meditation'},
+
+  /* havuz & su */
+  pool:{ic:`<path d="M3 18c1.5 0 1.5 1 3 1s1.5-1 3-1 1.5 1 3 1 1.5-1 3-1 1.5 1 3 1 1.5-1 3-1"/><path d="M7 14V6a2 2 0 0 1 4 0M13 14V6a2 2 0 0 1 4 0"/>`, tr:'Yüzme Havuzu', en:'Swimming Pool'},
+  indoorpool:{ic:`<path d="M3 9l9-5.5L21 9"/><path d="M4.5 19c1.2 0 1.2 .9 2.4 .9S8.1 19 9.3 19s1.2 .9 2.4 .9S13 19 14.2 19s1.2 .9 2.4 .9S17.8 19 19 19"/><path d="M8 16.5v-4.5a1.7 1.7 0 0 1 3.4 0M12.6 16.5V12a1.7 1.7 0 0 1 3.4 0"/>`, tr:'Kapalı Havuz', en:'Indoor Pool'},
+  aqua:{ic:`<path d="M4 20c1.4 0 1.4 -1 2.8 -1s1.4 1 2.8 1 1.4 -1 2.8 -1 1.4 1 2.8 1 1.4 -1 2.8 -1"/><path d="M20 4c-6 0-9 3.5-9 8v4"/><path d="M20 4v3"/><path d="M6 16v-2.5"/>`, tr:'Aqua Park', en:'Aqua Park'},
+  water:{ic:`<path d="M3 19c1.4 0 1.4 -1 2.8 -1s1.4 1 2.8 1 1.4 -1 2.8 -1 1.4 1 2.8 1 1.4 -1 2.8 -1"/><path d="M17 6.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/><path d="M4 14l6-3 4 2 3-4"/>`, tr:'Su Sporları', en:'Water Sports'},
+  sup:{ic:`<path d="M3 19c1.4 0 1.4 -1 2.8 -1s1.4 1 2.8 1 1.4 -1 2.8 -1 1.4 1 2.8 1 1.4 -1 2.8 -1"/><path d="M12 5.2a1.4 1.4 0 1 0 0-2.8 1.4 1.4 0 0 0 0 2.8z"/><path d="M12 7.5v6M9 16l3-2.5 3 2.5M7 6l10 7"/>`, tr:'SUP & Kürek', en:'Paddling & SUP'},
+  beach:{ic:`<path d="M3 20h18"/><path d="M12 20V9"/><path d="M5 9h14a7 7 0 0 0-14 0z"/><path d="M15 20a3 3 0 0 1 5 0"/>`, tr:'Kumsal Plaj', en:'Sandy Beach'},
   sea:{ic:`<path d="M3 17c1.5 0 1.5 1.2 3 1.2S10.5 17 12 17s1.5 1.2 3 1.2S19.5 17 21 17"/><path d="M3 12c1.5 0 1.5 1.2 3 1.2S10.5 12 12 12s1.5 1.2 3 1.2S19.5 12 21 12"/><path d="M12 7l-2 2M12 7l2 2M12 4v5"/>`, tr:'Denize Sıfır', en:'Seafront'},
+  view:{ic:`<path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="2.6"/>`, tr:'Deniz Manzarası', en:'Sea View'},
   marina:{ic:`<path d="M12 21V8M12 8a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM6 12l6-4 6 4M5 14c0 4 3 6 7 6s7-2 7-6"/>`, tr:'Marina', en:'Marina'},
-  park:{ic:`<path d="M12 21v-5M8 16a4 4 0 0 1-1-7 5 5 0 0 1 10 0 4 4 0 0 1-1 7z"/>`, tr:'Merkezî Parklar', en:'Central Parks'},
+
+  /* spor & aktivite */
+  gym:{ic:`<path d="M6.5 6.5l11 11M4 9l-1.5 1.5 2 2M20 15l1.5-1.5-2-2M9 4L7.5 5.5M15 20l1.5-1.5"/>`, tr:'Spor Salonu', en:'Fitness Centre'},
+  sports:{ic:`<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/>`, tr:'Spor Kompleksi', en:'Sports Complex'},
+  padel:{ic:`<path d="M9.5 14.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11z"/><path d="M7.5 6.5v6M9.5 5.5v8M11.5 6.5v6"/><path d="M11.5 13.5L20 21"/>`, tr:'Padel Kortu', en:'Padel Court'},
+  golf:{ic:`<path d="M10 20V4l7 3.5-7 3.5"/><path d="M6 20h11"/><circle cx="8" cy="18.5" r="1.4"/>`, tr:'Mini Golf', en:'Mini Golf'},
+  bike:{ic:`<circle cx="5.5" cy="17" r="3.2"/><circle cx="18.5" cy="17" r="3.2"/><path d="M8.5 17l4-8h4M10.5 9h4.5M15 5.5h2.5l1 3"/>`, tr:'Bisiklet Yolu', en:'Cycling Track'},
+  walk:{ic:`<path d="M13 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM11 21l1.5-5L10 13l1-5 3 2 2 3M9 22l2-4"/>`, tr:'Yürüyüş Yolu', en:'Walking Track'},
+  kids:{ic:`<path d="M12 6.4a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4z"/><path d="M5 21l4-7h6l4 7"/><path d="M7.5 17h9"/><path d="M12 8v6"/>`, tr:'Çocuk Oyun Alanı', en:'Kids Playground'},
+  kidsclub:{ic:`<path d="M4 20V11l8-5 8 5v9z"/><path d="M9 20v-5h6v5"/><path d="M9.5 10.5v.01M14.5 10.5v.01"/>`, tr:'Kids Club', en:'Kids Club'},
+  cinema:{ic:`<path d="M3 8.5h18V20H3z"/><path d="M3 8.5L6.5 4M9 8.5L12.5 4M15 8.5L18.5 4"/><path d="M10 12l4.5 2.6L10 17.2z"/>`, tr:'Açık Hava Sineması', en:'Open-Air Cinema'},
+  amphi:{ic:`<path d="M3 19h18"/><path d="M4.5 19v-3h15v3M7 16v-3h10v3M9.5 13v-3h5v3"/>`, tr:'Amfitiyatro', en:'Amphitheatre'},
+
+  /* yeme & içme */
+  restaurant:{ic:`<path d="M6 3v7a2 2 0 0 0 4 0V3M8 10v11M18 3c-1.5 0-2.5 2-2.5 5s1 4 2.5 4v9"/>`, tr:'Restoran', en:'Restaurant'},
+  bar:{ic:`<path d="M4 4h16l-8 8z"/><path d="M12 12v8M8.5 20h7"/><path d="M15 7l4-3.5"/>`, tr:'Bar', en:'Bar'},
+  cafe:{ic:`<path d="M4 8h13v5a5 5 0 0 1-10 0z"/><path d="M17 9h2.2a2.2 2.2 0 0 1 0 4.4H17"/><path d="M4 20h14"/><path d="M8 5V3.5M11.5 5V3.5"/>`, tr:'Kafe', en:'Coffee Shop'},
+  grill:{ic:`<path d="M4.5 6h15l-2 6.5a6 6 0 0 1-11 0z"/><path d="M9 16.5L7 21M15 16.5l2 4.5"/><path d="M9 3.5c0 1-1 1.2-1 2.2M13 3c0 1-1 1.2-1 2.2"/>`, tr:'Ocakbaşı', en:'Grill House'},
+  sushi:{ic:`<circle cx="12" cy="12" r="8.2"/><circle cx="12" cy="12" r="3.2"/><path d="M12 3.8v3M12 17.2v3M3.8 12h3M17.2 12h3"/>`, tr:'Sushi Bar', en:'Sushi Bar'},
+  wine:{ic:`<path d="M7.5 3h9l-1 6a3.5 3.5 0 0 1-7 0z"/><path d="M12 12.5V20M8.5 20h7"/>`, tr:'Şarap Evi', en:'Wine House'},
+  lounge:{ic:`<path d="M3 12.5a2 2 0 0 1 4 0V16h10v-3.5a2 2 0 0 1 4 0V19H3z"/><path d="M6 12V8.5a1.5 1.5 0 0 1 1.5-1.5h9A1.5 1.5 0 0 1 18 8.5V12"/>`, tr:'Lounge', en:'Lounge'},
+  kitchen:{ic:`<path d="M4 4h16v16H4z"/><path d="M4 10h16"/><circle cx="8" cy="7" r="1"/><circle cx="12" cy="7" r="1"/><path d="M8 13.5h8v5H8z"/>`, tr:'Ortak Mutfak', en:'Shared Kitchen'},
+
+  /* ticari & hizmet */
+  market:{ic:`<path d="M3 7.5h18L19.5 20h-15z"/><path d="M8.5 10V6a3.5 3.5 0 0 1 7 0v4"/>`, tr:'Süpermarket', en:'Supermarket'},
+  shop:{ic:`<path d="M4 9.5h16V20H4z"/><path d="M3 9.5L5 4h14l2 5.5"/><path d="M9.5 9.5V20"/>`, tr:'Ticari Alanlar', en:'Retail Units'},
+  pharmacy:{ic:`<path d="M4 6.5h16V20H4z"/><path d="M8 6.5V4.5h8v2"/><path d="M12 10v6M9 13h6"/>`, tr:'Eczane', en:'Pharmacy'},
+  butcher:{ic:`<path d="M14 3.5l5.5 5.5-7 7-5.5-5.5z"/><path d="M7 10.5L3.5 14 8 18.5 11.5 15"/><path d="M16.5 6.5l2-2"/>`, tr:'Kasap', en:'Butcher'},
+  office:{ic:`<path d="M3 20h18"/><path d="M5 20V6h9v14"/><path d="M14 10h5v10"/><path d="M8 9.5v.01M11 9.5v.01M8 13v.01M11 13v.01"/>`, tr:'Ofisler', en:'Offices'},
+  meeting:{ic:`<path d="M3 5.5h18v10H3z"/><path d="M12 15.5V19M7.5 19h9"/><path d="M6.5 9.5h6M6.5 12h9"/>`, tr:'Toplantı Salonu', en:'Meeting Room'},
+  edu:{ic:`<path d="M2.5 8.5L12 4l9.5 4.5L12 13z"/><path d="M6.5 10.7V16c0 1.7 2.5 3 5.5 3s5.5-1.3 5.5-3v-5.3"/><path d="M21 9v5"/>`, tr:'Eğitim Salonu', en:'Training Room'},
+  conference:{ic:`<path d="M4 4.5h16v11H4z"/><path d="M12 15.5V19M7 19h10"/><path d="M8 12l2.5-3 2 2L15 8"/>`, tr:'Konferans Salonu', en:'Conference Hall'},
+  hub:{ic:`<circle cx="12" cy="12" r="2.6"/><circle cx="12" cy="4.2" r="1.9"/><circle cx="12" cy="19.8" r="1.9"/><circle cx="4.6" cy="8.2" r="1.9"/><circle cx="19.4" cy="8.2" r="1.9"/><path d="M12 6.1v3.3M12 14.6v3.3M6.3 9.2l3.4 1.6M17.7 9.2l-3.4 1.6"/>`, tr:'Sosyal Hub', en:'Social Hub'},
+  studio:{ic:`<circle cx="12" cy="9" r="4"/><path d="M12 13v4M8.5 17h7"/><path d="M6.5 9a5.5 5.5 0 0 0 11 0"/>`, tr:'Prodüksiyon Stüdyosu', en:'Production Studio'},
+  car:{ic:`<path d="M4 16.5h16"/><path d="M5 16.5v-4l1.8-4.5h10.4L19 12.5v4"/><path d="M5 16.5V19h2.5v-2.5M16.5 16.5V19H19v-2.5"/><path d="M7.5 13h2M14.5 13h2"/>`, tr:'Otomotiv', en:'Automotive'},
+  parking:{ic:`<rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M9.5 16.5V7.5h3.2a2.9 2.9 0 0 1 0 5.8H9.5"/>`, tr:'Otopark', en:'Car Park'},
+  exchange:{ic:`<circle cx="12" cy="12" r="8.5"/><path d="M9 9.5h5a1.8 1.8 0 0 1 0 3.6h-4a1.8 1.8 0 0 0 0 3.6h5"/><path d="M12 7v10"/>`, tr:'Döviz Bürosu', en:'Exchange Office'},
+  exhibition:{ic:`<path d="M4 4h16v12H4z"/><path d="M4 20h16"/><circle cx="9" cy="9" r="1.6"/><path d="M6 14l3.5-3 2.5 2 3-2.5L18 14"/>`, tr:'Sergi Alanı', en:'Exhibition Space'},
+  concierge:{ic:`<path d="M5 20h14M7 20v-3a5 5 0 0 1 10 0v3M12 6V4M9 9.5h6"/>`, tr:'Concierge Hizmeti', en:'Concierge Service'},
   security:{ic:`<path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/><path d="M9.5 12l2 2 3.5-4"/>`, tr:'7/24 Güvenlik', en:'24/7 Security'},
-  walk:{ic:`<path d="M13 5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM11 21l1.5-5L10 13l1-5 3 2 2 3M9 22l2-4"/>`, tr:'Yürüyüş & Bisiklet', en:'Walking & Cycling'},
-  concierge:{ic:`<path d="M5 20h14M7 20v-3a5 5 0 0 1 10 0v3M12 6V4M9 9.5h6"/>`, tr:'Concierge Hizmeti', en:'Concierge Service'}
+
+  /* doğa & peyzaj */
+  park:{ic:`<path d="M12 21v-5M8 16a4 4 0 0 1-1-7 5 5 0 0 1 10 0 4 4 0 0 1-1 7z"/>`, tr:'Yeşil Alanlar', en:'Green Areas'},
+  forest:{ic:`<path d="M8 17.5L3.5 17.5 8 4l4.5 13.5H8z"/><path d="M8 17.5V21"/><path d="M16 19L12.5 19 16 9l3.5 10H16z"/><path d="M16 19v2"/>`, tr:'Orman Alanı', en:'Forest'},
+  botanic:{ic:`<path d="M12 21v-8"/><path d="M12 13c0-3 2.5-5.5 6-5.5 0 3.5-2.5 5.5-6 5.5z"/><path d="M12 16c0-2.6-2.2-4.5-5.2-4.5 0 3 2.2 4.5 5.2 4.5z"/>`, tr:'Endemik Bitki Peyzajı', en:'Endemic Planting'},
+  farm:{ic:`<path d="M3 20h18"/><path d="M6 20v-4.5c0-2.5 2-4.5 4.5-4.5"/><path d="M12 20V9"/><path d="M12 11c0-3 2-5 5-5 0 3-2 5-5 5z"/><path d="M9.5 6.5V3.5M7.5 5h4"/>`, tr:'Organik Tarım', en:'Organic Farming'},
+  vineyard:{ic:`<path d="M12 3v4"/><circle cx="12" cy="9" r="1.7"/><circle cx="9" cy="12.5" r="1.7"/><circle cx="15" cy="12.5" r="1.7"/><circle cx="12" cy="16" r="1.7"/><circle cx="6.5" cy="16" r="1.5"/><circle cx="17.5" cy="16" r="1.5"/>`, tr:'Bağcılık & Şarap', en:'Vineyard & Winery'},
+  bbq:{ic:`<path d="M5 6.5h14l-1.6 6.5a6 6 0 0 1-10.8 0z"/><path d="M9 16.5L7 21M15 16.5l2 4.5"/><path d="M12 3.5c0 1-1.2 1.2-1.2 2.2"/>`, tr:'Barbekü Alanı', en:'BBQ Area'},
+
+  /* teknik */
+  heat:{ic:`<path d="M3 20h18"/><path d="M6 20v-3M10 20v-3M14 20v-3M18 20v-3"/><path d="M8 12c0-2 2-2 2-4s-2-2-2-4M14.5 12c0-2 2-2 2-4s-2-2-2-4"/>`, tr:'Yerden Isıtma', en:'Underfloor Heating'},
+  cool:{ic:`<path d="M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9"/><path d="M9.5 5.5L12 3l2.5 2.5M9.5 18.5L12 21l2.5-2.5"/>`, tr:'Gizli Kanal Soğutma', en:'Concealed Duct Cooling'}
 };
 const DEFAULT_FACILS = ['pool','gym','restaurant','sea','park','security'];
+
+/* daire tipi ikonları — ad kalıbından otomatik seçilir */
+const UNIT_ICO = {
+  studio:`<rect x="4" y="5" width="16" height="14" rx="1.6"/><path d="M4 10h16"/>`,
+  flat:`<rect x="3.5" y="4" width="17" height="16" rx="1.6"/><path d="M3.5 9.5h17M12 9.5V20"/>`,
+  loft:`<path d="M3 11l9-7 9 7"/><path d="M5.5 10v10h13V10"/><path d="M5.5 15h13"/>`,
+  duplex:`<rect x="3.5" y="4" width="17" height="16" rx="1.6"/><path d="M3.5 12h17"/><path d="M8 4v16"/>`,
+  penthouse:`<path d="M4 20V9l8-5 8 5v11"/><path d="M4 13.5h16"/><path d="M10 20v-4h4v4"/>`,
+  villa:`<path d="M3 11l9-7 9 7"/><path d="M5.5 10v10h13V10"/><path d="M10.2 20v-5h3.6v5"/>`,
+  garden:`<path d="M4 4h16v10H4z"/><path d="M4 9h16M12 9v5"/><path d="M2.5 17.5h19"/><path d="M6 21c0-2 1.4-3.5 3-3.5M18 21c0-2-1.4-3.5-3-3.5"/>`,
+  terrace:`<path d="M2.5 9.5h19"/><path d="M4.5 9.5V4.5a1 1 0 0 1 1-1h13a1 1 0 0 1 1 1v5"/><path d="M4.5 9.5V21M19.5 9.5V21"/><path d="M4.5 15h15"/><path d="M9 9.5V6.5M15 9.5V6.5"/>`
+};
+function unitIcon(name){
+  const s = String(name||'').toLowerCase();
+  if(/villa/.test(s))               return 'villa';
+  if(/penthouse/.test(s))           return 'penthouse';
+  if(/duplex|dubleks/.test(s))      return 'duplex';
+  if(/loft/.test(s))                return 'loft';
+  if(/teras|terrace|çatı/.test(s))  return 'terrace';
+  if(/bahçe|garden/.test(s))        return 'garden';
+  if(/stüdyo|studio/.test(s))       return 'studio';
+  return 'flat';
+}
 
 /* ---- detaylı tesis dizini (kat + birim); bazı projelerde blok bazlı ---- */
 const FLOORS = {
@@ -882,53 +1198,50 @@ const DIRECTORY = {
   laisla:{
     groups:[
       {cat:{tr:'Mağazalar', en:'Shops'}, items:[
-        {fl:'b1', name:'Gym'},
-        {fl:'g',  name:'Supermarket'},
-        {fl:'g',  name:'Butcher'},
-        {fl:'g',  name:'Pharmacy'},
-        {fl:'g',  name:'Döveç Maintenance Office'}
+        {fl:'b1', name:{tr:'Spor Salonu',        en:'Gym'}},
+        {fl:'g',  name:{tr:'Süpermarket',        en:'Supermarket'}},
+        {fl:'g',  name:{tr:'Kasap',              en:'Butcher'}},
+        {fl:'g',  name:{tr:'Eczane',             en:'Pharmacy'}},
+        {fl:'g',  name:{tr:'Döveç Bakım Ofisi',  en:'Döveç Maintenance Office'}}
       ]},
       {cat:{tr:'Restoranlar', en:'Restaurants'}, items:[
-        {fl:'g',  name:'Coffee Shop'},
-        {fl:'g',  name:'All Day Dining Restaurant'},
-        {fl:'f1', name:'Sports Bar'},
-        {fl:'f1', name:'Ocakbaşı & Meze'}
+        {fl:'g',  name:{tr:'Kafe',               en:'Coffee Shop'}},
+        {fl:'g',  name:{tr:'Restoran',           en:'All Day Dining Restaurant'}},
+        {fl:'f1', name:{tr:'Spor Barı',          en:'Sports Bar'}},
+        {fl:'f1', name:{tr:'Ocakbaşı & Meze',    en:'Ocakbaşı & Meze'}}
       ]}
     ]
   },
   quarencia:{
     groups:[
       {cat:{tr:'A Blok', en:'Block A'}, items:[
-        {fl:'g',    name:'Off-Licence'},
-        {fl:'g',    name:'Exchange Office'},
-        {fl:'g',    name:'Botanist'},
-        {fl:'g',    name:'Döveç Sales Office'},
-        {fl:'g',    name:'Exhibition Space'},
-        {fl:'f12',  name:'Fire Dine Steak House & Bar'},
-        {fl:'f1314',name:'Live Music Lounge & Bar'}
+        {fl:'g',    name:{tr:'Tekel Bayi',                    en:'Off-Licence'}},
+        {fl:'g',    name:{tr:'Döviz Bürosu',                  en:'Exchange Office'}},
+        {fl:'g',    name:{tr:'Sergi Alanı',                   en:'Exhibition Space'}},
+        {fl:'f12',  name:{tr:'Fine Dine Steak House & Bar',   en:'Fine Dine Steak House & Bar'}},
+        {fl:'f1314',name:{tr:'Canlı Müzik Lounge & Bar',      en:'Live Music Lounge & Bar'}}
       ]},
       {cat:{tr:'B Blok', en:'Block B'}, items:[
-        {fl:'b1', name:'Wellness Club'},
-        {fl:'b1', name:'Beauty Centre'},
-        {fl:'b1', name:'Cocktail Bar'},
-        {fl:'g',  name:'Burger Restaurant'},
-        {fl:'g',  name:'Cocktail Bar'},
-        {fl:'g',  name:'Italian Restaurant'}
+        {fl:'b1', name:{tr:'Wellness Kulübü',      en:'Wellness Club'}},
+        {fl:'b1', name:{tr:'Güzellik Merkezi',     en:'Beauty Centre'}},
+        {fl:'b1', name:{tr:'Kokteyl Bar',          en:'Cocktail Bar'}},
+        {fl:'g',  name:{tr:'Burger Restoran',      en:'Burger Restaurant'}},
+        {fl:'g',  name:{tr:'Kokteyl Bar',          en:'Cocktail Bar'}},
+        {fl:'g',  name:{tr:'İtalyan Restoran',     en:'Italian Restaurant'}}
       ]},
       {cat:{tr:'C Blok', en:'Block C'}, items:[
-        {fl:'b1', name:'Kids Club'},
-        {fl:'b1', name:'Kids Playground'},
-        {fl:'b1', name:'Recording Studio'},
-        {fl:'b1', name:'Scooter & Bicycle Rental'},
-        {fl:'b1', name:'Hobby Room'},
-        {fl:'g',  name:'Coffee Shop & Patisserie'},
-        {fl:'g',  name:'Chinese & Sushi Restaurant'}
+        {fl:'b1', name:{tr:'Kids Club',                     en:'Kids Club'}},
+        {fl:'b1', name:{tr:'Çocuk Oyun Alanı',              en:'Kids Playground'}},
+        {fl:'b1', name:{tr:'Scooter & Bisiklet Kiralama',   en:'Scooter & Bicycle Rental'}},
+        {fl:'b1', name:{tr:'Hobi Odası',                    en:'Hobby Room'}},
+        {fl:'g',  name:{tr:'Kafe & Pastane',                en:'Coffee Shop & Patisserie'}},
+        {fl:'g',  name:{tr:'Çin & Sushi Restoran',          en:'Chinese & Sushi Restaurant'}}
       ]},
       {cat:{tr:'D Blok', en:'Block D'}, items:[
-        {fl:'b1', name:'Pharmacy'},
-        {fl:'b1', name:'Supermarket'},
-        {fl:'g',  name:'Tapas Bar'},
-        {fl:'g',  name:'Wine House'}
+        {fl:'b1', name:{tr:'Eczane',       en:'Pharmacy'}},
+        {fl:'b1', name:{tr:'Süpermarket',  en:'Supermarket'}},
+        {fl:'g',  name:{tr:'Tapas Bar',    en:'Tapas Bar'}},
+        {fl:'g',  name:{tr:'Şarap Evi',    en:'Wine House'}}
       ]}
     ]
   }
@@ -1018,6 +1331,9 @@ function openDetail(id){
 
   window._curP = p;   // mevcut proje
 
+  // daire tipleri (olanaklar üstü)
+  const unitsHTML = buildUnits(p);
+
   // olanaklar (galeri üstü) — ikon + çok kısa açıklama
   const facHTML = `<div class="fac-section">
       <div class="vs-head">
@@ -1065,6 +1381,7 @@ function openDetail(id){
       <p class="d-desc">${p.desc[lang]}</p>
       <div class="d-tags">${tags}</div>
     </div>
+    ${unitsHTML}
     ${facHTML}
     ${imgs.length>1?`<div class="photo-section">
       <div class="vs-head">
@@ -1151,12 +1468,38 @@ function buildVideoCards(p){
   }).filter(Boolean).join('') : emptyCard(0);
   return `<div class="video-row" id="videoRow">${cards}</div>`;
 }
+/* daire tipleri — düz liste veya {cat, items} grupları */
+function buildUnits(p){
+  if(!p.units || !p.units.length) return '';
+  const groups = p.units[0].items ? p.units : [{cat:null, items:p.units}];
+  const wrap = groups.map(g=>{
+    const chips = g.items.map(u=>`<div class="unit-chip">
+        <span class="u-ico"><svg viewBox="0 0 24 24">${UNIT_ICO[unitIcon(u.en||u.tr)]}</svg></span>
+        <span class="u-name">${u[lang]}</span></div>`).join('');
+    return `<div class="unit-group">${g.cat?`<h4 class="unit-cat">${g.cat[lang]}</h4>`:''}
+      <div class="unit-grid">${chips}</div></div>`;
+  }).join('');
+  return `<div class="units-section">
+      <div class="vs-head">
+        <h3 class="serif"><span class="vs-ico"><svg viewBox="0 0 24 24"><path d="M3 3h7.5v7.5H3zM12.5 3H21v4.5h-8.5zM12.5 9.5H21V21h-8.5zM3 12.5h7.5V21H3z"/></svg></span>${I18N.unitsTitle[lang]}</h3>
+        <span class="vs-line"></span>
+      </div>
+      <div class="unit-wrap">${wrap}</div>
+    </div>`;
+}
 function buildFacilities(p){
-  const keys = (p.facils && p.facils.length) ? p.facils : DEFAULT_FACILS;
-  const items = keys.filter(k=>FAC[k]).map(k=>`<div class="fac-item">
-      <div class="fac-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${FAC[k].ic}</svg></div>
-      <span>${FAC[k][lang]}</span></div>`).join('');
-  const grid = `<div class="fac-grid">${items}</div>`;
+  // 'anahtar' → FAC varsayılan etiketi;  {ic,tr,en} → projeye özel etiket
+  const raw = (p.facils && p.facils.length) ? p.facils
+            : (DIRECTORY[p.id] ? [] : DEFAULT_FACILS);
+  const items = raw.map(f=>{
+    const base = FAC[typeof f === 'string' ? f : f.ic];
+    if(!base) return '';
+    const label = (typeof f === 'string') ? base[lang] : (f[lang] || base[lang]);
+    return `<div class="fac-item">
+      <div class="fac-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${base.ic}</svg></div>
+      <span>${label}</span></div>`;
+  }).filter(Boolean).join('');
+  const grid = items ? `<div class="fac-grid">${items}</div>` : '';
 
   // detaylı dizin varsa (La Isla, Querencia ...) üstte göster
   const dir = DIRECTORY[p.id];
@@ -1167,7 +1510,7 @@ function buildFacilities(p){
       g.items.forEach(it=>{
         let b = byFloor.find(x=>x.fl===it.fl);
         if(!b){ b={fl:it.fl, names:[]}; byFloor.push(b); }
-        b.names.push(it.name);
+        b.names.push(typeof it.name === 'string' ? it.name : it.name[lang]);
       });
       const blocks = byFloor.map(b=>`<div class="dir-floor-block">
           <span class="dir-floor-lbl">${FLOORS[b.fl] ? FLOORS[b.fl][lang] : b.fl}</span>
@@ -1179,8 +1522,7 @@ function buildFacilities(p){
     }).join('');
     const genLabel = lang==='tr' ? 'Genel Olanaklar' : 'General Facilities';
     return `<div class="dir-wrap">${groups}</div>
-      <h4 class="dir-gen-title serif">${genLabel}</h4>
-      ${grid}`;
+      ${grid ? `<h4 class="dir-gen-title serif">${genLabel}</h4>${grid}` : ''}`;
   }
   return grid;
 }
