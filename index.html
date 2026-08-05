@@ -196,6 +196,8 @@ body{
 .d-intro-eyebrow{color:var(--gold);font-size:.66rem;letter-spacing:.36em;text-transform:uppercase;font-weight:700;
   display:flex;align-items:center;justify-content:center;gap:13px;margin-bottom:22px}
 .d-intro-eyebrow::before,.d-intro-eyebrow::after{content:'';width:32px;height:1px;background:var(--gold);opacity:.55}
+.d-slogan{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.62rem;line-height:1.35;
+  color:var(--gold-light);margin-bottom:22px;letter-spacing:.01em}
 .d-desc{font-size:1.08rem;line-height:1.85;color:rgba(255,255,255,.82);font-weight:300;letter-spacing:.01em}
 .d-tags{display:flex;flex-wrap:wrap;gap:11px;justify-content:center;margin-top:30px}
 .d-tag{font-size:.74rem;letter-spacing:.04em;color:var(--gold-pale);background:rgba(226,192,121,.1);border:1px solid rgba(226,192,121,.28);padding:9px 18px;border-radius:30px;font-weight:500}
@@ -389,6 +391,19 @@ body{
   display:flex;align-items:center;justify-content:center;transition:.4s var(--ease);z-index:3}
 .vlight-close:hover{background:var(--gold);color:var(--navy-deep);transform:rotate(90deg)}
 .vlight-close svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
+
+/* ===== detay: proje künyesi (açıklama altı) ===== */
+.facts-section{max-width:1620px;margin:46px auto 0}
+.fact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px}
+.fact-item{display:flex;flex-direction:column;gap:9px;padding:22px 24px;border-radius:16px;
+  border:1px solid rgba(226,192,121,.18);background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012));
+  transition:.35s var(--ease)}
+.fact-item:hover{border-color:rgba(226,192,121,.44);transform:translateY(-3px);
+  background:linear-gradient(180deg,rgba(226,192,121,.08),rgba(255,255,255,.02))}
+.fact-k{font-family:'Karla',sans-serif;font-size:.58rem;font-weight:700;letter-spacing:.26em;
+  text-transform:uppercase;color:var(--gold)}
+.fact-v{font-family:'Cormorant Garamond',serif;font-size:1.34rem;font-weight:600;line-height:1.28;
+  color:rgba(255,255,255,.96);letter-spacing:.01em}
 
 /* ===== detay: daire tipleri bölümü (olanaklar üstü) ===== */
 .units-section{max-width:1620px;margin:46px auto 0}
@@ -726,10 +741,19 @@ body{
 const PROJECTS = [
   {id:'lacasalia', span:'big',  gal:5,
     name:'La Casalia',
-    label:{tr:'Tatlısu · Gazimağusa', en:'Tatlısu · Famagusta'},
+    label:{tr:'Tatlısu · Girne', en:'Tatlısu · Kyrenia'},
     sub:{tr:'Wellness Konsept · 454 Ünite', en:'Wellness Concept · 454 Units'},
-    desc:{tr:'Tatlısu sahilinde, Akdeniz’den ilham alan ve sağlıklı yaşam (wellbeing) üzerine kurgulanmış bir topluluk. 1+1 ve 2+1 deluxe daireler, 3+1 loft’lar ile 2+1 ve 3+1 villalardan oluşan 454 ünite, denize ve 169.000 m²’lik orman alanına bakar. Kendi kumsal plajı, marinası, su sporları merkezi ve 2.500 kişilik amfitiyatrosunun yanı sıra organik tarım ve hobi bahçeleri, bağcılık–şarap üretimi, yoga ve meditasyon alanları, tenis & basketbol sahaları ve 5 özel restoranıyla doğanın içinde bütüncül bir yaşam sunar.',
-          en:'On the Tatlısu seafront, La Casalia is a wellbeing-focused community inspired by the Mediterranean. Its 454 units — 1+1 and 2+1 deluxe residences, 3+1 lofts and 2+1 / 3+1 villas — overlook the sea and 169,000 m² of forest. A private sandy beach, marina, water-sports centre and 2,500-seat amphitheatre are joined by organic farming and hobby gardens, vineyards with wine production, yoga and meditation areas, tennis & basketball courts and five signature restaurants.'},
+    slogan:{tr:'Wellness ve Lüks Yaşamın Yeni Standardı', en:'A New Standard of Wellness and Luxury Living'},
+    facts:[
+      ['loc',      {tr:'Tatlısu · Girne',        en:'Tatlısu · Kyrenia'}],
+      ['units',    {tr:'454 ünite',              en:'454 units'}],
+      ['area',     {tr:'355.000 m²',             en:'355,000 m²'}],
+      ['concept',  {tr:'Wellness & sağlık',      en:'Wellness & wellbeing'}],
+      ['dist',     {tr:'Denize sıfır',           en:'Direct seafront'}],
+      ['delivery', {tr:'2027',                   en:'2027'}]
+    ],
+    desc:{tr:'Tatlısu sahilinde, 355.000 m²’lik arazi üzerinde Akdeniz’den ilham alan ve sağlıklı yaşam (wellbeing) üzerine kurgulanmış bir topluluk. 1+1 ve 2+1 deluxe daireler, 3+1 loft’lar ile 2+1 ve 3+1 villalardan oluşan 454 ünite, denize ve 169.000 m²’lik orman alanına bakar. Kendi kumsal plajı, marinası, su sporları merkezi ve 2.500 kişilik amfitiyatrosunun yanı sıra organik tarım ve hobi bahçeleri, bağcılık–şarap üretimi, yoga ve meditasyon alanları, tenis & basketbol sahaları ve 5 özel restoranıyla doğanın içinde bütüncül bir yaşam sunar.',
+          en:'On the Tatlısu seafront, set across a 355,000 m² site, La Casalia is a wellbeing-focused community inspired by the Mediterranean. Its 454 units — 1+1 and 2+1 deluxe residences, 3+1 lofts and 2+1 / 3+1 villas — overlook the sea and 169,000 m² of forest. A private sandy beach, marina, water-sports centre and 2,500-seat amphitheatre are joined by organic farming and hobby gardens, vineyards with wine production, yoga and meditation areas, tennis & basketball courts and five signature restaurants.'},
     tags:{tr:['Wellness Konsept','454 Ünite','Marina & Plaj'], en:['Wellness Concept','454 Units','Marina & Beach']},
     units:[
       {tr:'1+1 Deluxe', en:'1+1 Deluxe'},
@@ -753,11 +777,18 @@ const PROJECTS = [
     ]},
   {id:'dpoint', span:'big', gal:3,
     name:'D-Point',
-    label:{tr:"İskele · Long Beach", en:'İskele · Long Beach'},
-    sub:{tr:'All-in-One Yaşam & İş Merkezi · 405 Ünite', en:'All-in-One Living & Business Hub · 405 Units'},
-    desc:{tr:'Yaşam, iş ve sosyalleşmeyi tek çatı altında toplayan “All-in-One” konsept. Long Beach İskele’de, tam donanımlı bir iş merkeziyle bütünleşen 405 ünite; stüdyo, 1+1 ve 2+1 seçeneklerinden oluşur ve Akdeniz ışığını içeri taşıyan geniş pencerelerle tasarlanmıştır. Konferans salonu, toplantı odaları, eğitim salonu, açık ofis alanı, özel ofisler ve içerik üretim stüdyosu iş tarafını; yüzme havuzu, bar, restoran, kafe, Green Lounge, sosyal lounge, sosyal hub ve ortak mutfak yaşam tarafını karşılar. D-MAR market, Autotrend, otopark ve 7/24 güvenlik site içinde hizmet verir.',
-          en:'An “All-in-One” concept gathering living, work and leisure under one roof. In Long Beach İskele, 405 units integrated with a fully equipped business centre span studios, 1+1 and 2+1 apartments, designed with large windows that draw in the Mediterranean light. A conference hall, meeting rooms, training room, open-plan workspace, private offices and a content production studio serve the work side; a swimming pool, bar, restaurant, coffee shop, Green Lounge, social lounge, social hub and shared kitchen serve the living side. D-MAR market, Autotrend, car park and 24/7 security operate on site.'},
-    tags:{tr:['All-in-One','405 Ünite','İş Merkezi'], en:['All-in-One','405 Units','Business Hub']},
+    label:{tr:"İskele · Kuzey Kıbrıs", en:'İskele · North Cyprus'},
+    sub:{tr:'Lifestyle & Business Hub · 312 Konut', en:'Lifestyle & Business Hub · 312 Residences'},
+    slogan:{tr:'Ofisin Ötesinde, Yaşamın İçinde', en:'Beyond the Office, Inside Life'},
+    facts:[
+      ['loc',      {tr:'İskele · Kuzey Kıbrıs',  en:'İskele · North Cyprus'}],
+      ['units',    {tr:'312 konut · 56 daire',   en:'312 residences · 56 apartments'}],
+      ['concept',  {tr:'Esnek çalışma & yaşam',  en:'Flexible work & living'}],
+      ['delivery', {tr:'2028',                   en:'2028'}]
+    ],
+    desc:{tr:'Yaşam, iş ve sosyalleşmeyi tek çatı altında toplayan “All-in-One” konsept. İskele’de, tam donanımlı bir iş merkeziyle bütünleşen 312 konut ve 56 daire; stüdyo, 1+1 ve 2+1 seçeneklerinden oluşur ve Akdeniz ışığını içeri taşıyan geniş pencerelerle tasarlanmıştır. Konferans salonu, toplantı odaları, eğitim salonu, açık ofis alanı, özel ofisler ve içerik üretim stüdyosu iş tarafını; yüzme havuzu, bar, restoran, kafe, Green Lounge, sosyal lounge, sosyal hub ve ortak mutfak yaşam tarafını karşılar. D-MAR market, Autotrend, otopark ve 7/24 güvenlik site içinde hizmet verir.',
+          en:'An “All-in-One” concept gathering living, work and leisure under one roof. In İskele, 312 residences and 56 apartments integrated with a fully equipped business centre span studios, 1+1 and 2+1 layouts, designed with large windows that draw in the Mediterranean light. A conference hall, meeting rooms, training room, open-plan workspace, private offices and a content production studio serve the work side; a swimming pool, bar, restaurant, coffee shop, Green Lounge, social lounge, social hub and shared kitchen serve the living side. D-MAR market, Autotrend, car park and 24/7 security operate on site.'},
+    tags:{tr:['All-in-One','312 Konut','İş Merkezi'], en:['All-in-One','312 Residences','Business Hub']},
     units:[
       {tr:'Stüdyo', en:'Studio'},
       {tr:'1+1',    en:'1+1'},
@@ -786,10 +817,18 @@ const PROJECTS = [
     ]},
   {id:'natulux', span:'std', gal:4,
     name:'Natulux',
-    label:{tr:'Küçük Erenköy · Gazimağusa', en:'Küçük Erenköy · Famagusta'},
+    label:{tr:'Tatlısu · Girne', en:'Tatlısu · Kyrenia'},
     sub:{tr:'Denize Sıfır Butik · 97 Ünite', en:'Seafront Boutique · 97 Units'},
-    desc:{tr:'Küçük Erenköy, Tatlısu’da denize sıfır konumlanan butik bir proje. Kademeli mimarisiyle her üniteye panoramik Akdeniz manzarası sunan Natulux; 1+1 ve 3+1 garden daireler, 2+1 loft, 3+1 penthouse ile 3+1 ve 4+1 villalardan oluşan toplam 97 üniteyi kapsar. Hidroterapi duşu, sağlıklı yaşam havuzu, spa & wellness, yoga ve meditasyon alanları, mini golf, barbekü alanı, açık hava sineması ve su sporlarıyla eko-bilinçli bir lüks sunar.',
-          en:'A boutique seafront development in Küçük Erenköy, Tatlısu. Natulux’s tiered architecture grants every home a panoramic Mediterranean view, across 97 units spanning 1+1 and 3+1 garden apartments, 2+1 lofts, 3+1 penthouses and 3+1 / 4+1 villas. A hydrotherapy shower, wellbeing pool, spa & wellness centre, yoga and meditation areas, mini golf, BBQ area, open-air cinema and water sports define its eco-conscious luxury.'},
+    slogan:{tr:'Deniz, Doğa ve Lüksün Buluştuğu Yatırım', en:'Where Sea, Nature and Luxury Meet'},
+    facts:[
+      ['loc',      {tr:'Tatlısu · Girne',            en:'Tatlısu · Kyrenia'}],
+      ['units',    {tr:'97 ünite · villa & daire',   en:'97 units · villas & apartments'}],
+      ['view',     {tr:'270° panoramik deniz',       en:'270° panoramic sea view'}],
+      ['dist',     {tr:'Denize sıfır',               en:'Direct seafront'}],
+      ['delivery', {tr:'2028',                       en:'2028'}]
+    ],
+    desc:{tr:'Küçük Erenköy, Tatlısu’da denize sıfır konumlanan butik bir proje. Kademeli mimarisiyle her üniteye 270° panoramik Akdeniz manzarası sunan Natulux; 1+1 ve 3+1 garden daireler, 2+1 loft, 3+1 penthouse ile 3+1 ve 4+1 villalardan oluşan toplam 97 üniteyi kapsar. Hidroterapi duşu, sağlıklı yaşam havuzu, spa & wellness, yoga ve meditasyon alanları, mini golf, barbekü alanı, açık hava sineması ve su sporlarıyla eko-bilinçli bir lüks sunar.',
+          en:'A boutique seafront development in Küçük Erenköy, Tatlısu. Natulux’s tiered architecture grants every home a 270° panoramic Mediterranean view, across 97 units spanning 1+1 and 3+1 garden apartments, 2+1 lofts, 3+1 penthouses and 3+1 / 4+1 villas. A hydrotherapy shower, wellbeing pool, spa & wellness centre, yoga and meditation areas, mini golf, BBQ area, open-air cinema and water sports define its eco-conscious luxury.'},
     tags:{tr:['Denize Sıfır','97 Ünite','Butik'], en:['Seafront','97 Units','Boutique']},
     units:[
       {tr:'1+1 Garden',    en:'1+1 Garden'},
@@ -813,10 +852,19 @@ const PROJECTS = [
   {id:'quarencia', span:'std', gal:3,
     name:'Querencia',
     label:{tr:'İskele · Long Beach', en:'İskele · Long Beach'},
-    sub:{tr:'5★ Resort Rezidans · 705 Ünite', en:'5★ Resort Residence · 705 Units'},
-    desc:{tr:'İskele’de, Long Beach’in tam karşısında deniz kenarında bir lüks Akdeniz topluluğu. Querencia; stüdyo, 1+1, 2+1 ve 3+1 daireler ile 5+1 dubleks ve 5+1 penthouse’lardan oluşan 705 üniteyi dört blokta toplar. 180° kesintisiz deniz manzarası, özel havuzlu penthouse daireler, yerden ısıtma ve gizli kanal soğutma standarttır. TAROT Beach Club, wellness kulübü, güzellik merkezi, endemik bitki peyzajı ve dört blok boyunca yayılan restoran, bar, market ve mağazalarla 5 yıldızlı bir resort deneyimi sunar. Tüm üniteler profesyonel kiralama sistemine dahildir.',
-          en:'A luxury Mediterranean community on the seafront in İskele, directly across from Long Beach. Querencia gathers 705 units — studios, 1+1, 2+1 and 3+1 apartments plus 5+1 duplexes and 5+1 penthouses — across four blocks. Uninterrupted 180° sea views, penthouses with private pools, underfloor heating and concealed duct cooling come as standard. The TAROT Beach Club, wellness club, beauty centre, endemic planting and the restaurants, bars, market and shops spread across the four blocks deliver a five-star resort experience, with every unit enrolled in professional rental management.'},
-    tags:{tr:['5★ Resort','705 Ünite','4 Blok'], en:['5★ Resort','705 Units','4 Blocks']},
+    sub:{tr:'Hotel & Residence · 706 Ünite', en:'Hotel & Residence · 706 Units'},
+    slogan:{tr:'Modern Mimari, Prestijli Yaşam', en:'Modern Architecture, Prestigious Living'},
+    facts:[
+      ['loc',      {tr:'İskele · Long Beach',              en:'İskele · Long Beach'}],
+      ['units',    {tr:'706 ünite',                        en:'706 units'}],
+      ['blocks',   {tr:'4 blok (1 otel + 3 rezidans) · 14–28 kat', en:'4 blocks (1 hotel + 3 residential) · 14–28 floors'}],
+      ['view',     {tr:'270° panoramik deniz',             en:'270° panoramic sea view'}],
+      ['dist',     {tr:'Denize 400 m',                     en:'400 m to the sea'}],
+      ['delivery', {tr:'2027',                             en:'2027'}]
+    ],
+    desc:{tr:'İskele Long Beach’te, denize 400 metre mesafede yükselen lüks bir Akdeniz topluluğu. Querencia Hotel & Residence; stüdyo, 1+1, 2+1 ve 3+1 daireler ile 5+1 dubleks ve 5+1 penthouse’lardan oluşan 706 üniteyi biri otel olmak üzere dört blokta toplar. 14–28 kat arasında değişen yüksek mimarisiyle 270° panoramik deniz manzarası sunar; özel havuzlu penthouse daireler, yerden ısıtma ve gizli kanal soğutma standarttır. TAROT Beach Club, wellness kulübü, güzellik merkezi, endemik bitki peyzajı ve dört blok boyunca yayılan restoran, bar, market ve mağazalarla 5 yıldızlı bir resort deneyimi sunar. Tüm üniteler profesyonel kiralama sistemine dahildir.',
+          en:'A luxury Mediterranean community rising 400 metres from the sea in İskele’s Long Beach. Querencia Hotel & Residence gathers 706 units — studios, 1+1, 2+1 and 3+1 apartments plus 5+1 duplexes and 5+1 penthouses — across four blocks, one of them a hotel. Its 14–28 storey architecture delivers 270° panoramic sea views, with private-pool penthouses, underfloor heating and concealed duct cooling as standard. The TAROT Beach Club, wellness club, beauty centre, endemic planting and the restaurants, bars, market and shops spread across the four blocks deliver a five-star resort experience, with every unit enrolled in professional rental management.'},
+    tags:{tr:['5★ Resort','706 Ünite','1 Otel + 3 Blok'], en:['5★ Resort','706 Units','1 Hotel + 3 Blocks']},
     units:[
       {tr:'Stüdyo',        en:'Studio'},
       {tr:'1+1',           en:'1+1'},
@@ -826,7 +874,7 @@ const PROJECTS = [
       {tr:'5+1 Penthouse', en:'5+1 Penthouse'}
     ],
     facils:[
-      {ic:'view',     tr:'180° Kesintisiz Deniz Manzarası', en:'180° Uninterrupted Sea View'},
+      {ic:'view',     tr:'270° Panoramik Deniz Manzarası',  en:'270° Panoramic Sea View'},
       {ic:'pool',     tr:'Özel Havuzlu Penthouse Daireler', en:'Penthouses with Private Pool'},
       {ic:'park',     tr:'Geniş Yeşil Alanlar',             en:'Extensive Green Areas'},
       {ic:'botanic',  tr:'Endemik Bitki Peyzajı',           en:'Endemic Planting'},
@@ -840,11 +888,19 @@ const PROJECTS = [
     ]},
   {id:'platinum', span:'std', gal:4,
     name:'Courtyard Platinum',
-    label:{tr:'Long Beach · İskele', en:'Long Beach · İskele'},
-    sub:{tr:'Resort Yaşam · 952 Rezidans', en:'Resort Living · 952 Residences'},
-    desc:{tr:'Courtyard ailesinin premium imzası. İskele Long Beach bölgesinde 952 rezidanstan oluşan, resort yaşam tarzını benimseyen seçkin bir proje. Stüdyo, 1+1, 1+1 dubleks ve 2+1 dubleks üniteler estetiği işlevsellikle birleştirir. Padel kortu ve açık spor kompleksi, sushi bar, ocakbaşı, spor barı, all day dining restoran, kafe ve süpermarket site içinde hizmet verir. Ofisler, kafe ofisi ve Döveç Bakım Ofisi ile profesyonel kiralama yönetimi istikrarlı yatırım getirisi sağlar.',
-          en:'The premium signature of the Courtyard family. A distinguished resort-lifestyle development of 952 residences in İskele’s Long Beach area. Studios, 1+1, 1+1 duplex and 2+1 duplex units pair aesthetics with functionality. A padel court and outdoor sports complex, sushi bar, grill house, sports bar, all-day dining restaurant, coffee shop and supermarket serve the site. Offices, a café office and the Döveç Maintenance Office support professional rental management and sustained investment returns.'},
-    tags:{tr:['Resort Yaşam','952 Rezidans','Padel & Spor'], en:['Resort Living','952 Residences','Padel & Sports']},
+    label:{tr:'Boğaz · İskele', en:'Boğaz · İskele'},
+    sub:{tr:'Resort Yaşam · 950 Ünite', en:'Resort Living · 950 Units'},
+    slogan:{tr:'Lüks Yaşam, Yüksek Kazanç, Tek Projede', en:'Luxury Living and High Returns in One Project'},
+    facts:[
+      ['loc',      {tr:'Boğaz · İskele',           en:'Boğaz · İskele'}],
+      ['units',    {tr:'950 ünite',                en:'950 units'}],
+      ['concept',  {tr:'Courtyard iç avlu konsepti', en:'Signature Courtyard courtyard concept'}],
+      ['dist',     {tr:'Denize 600 m',             en:'600 m to the sea'}],
+      ['delivery', {tr:'2026',                     en:'2026'}]
+    ],
+    desc:{tr:'Courtyard ailesinin premium imzası. İskele Boğaz bölgesinde, denize 600 metre mesafede 950 üniteden oluşan ve resort yaşam tarzını benimseyen seçkin bir proje. Markaya özel iç avlu (courtyard) konsepti etrafında kurgulanan stüdyo, 1+1, 1+1 dubleks ve 2+1 dubleks üniteler estetiği işlevsellikle birleştirir. Padel kortu ve açık spor kompleksi, sushi bar, ocakbaşı, spor barı, all day dining restoran, kafe ve süpermarket site içinde hizmet verir. Ofisler, kafe ofisi ve Döveç Bakım Ofisi ile profesyonel kiralama yönetimi istikrarlı yatırım getirisi sağlar.',
+          en:'The premium signature of the Courtyard family. A distinguished resort-lifestyle development of 950 units in İskele’s Boğaz area, 600 metres from the sea. Built around the brand’s signature inner-courtyard concept, its studios, 1+1, 1+1 duplex and 2+1 duplex units pair aesthetics with functionality. A padel court and outdoor sports complex, sushi bar, grill house, sports bar, all-day dining restaurant, coffee shop and supermarket serve the site. Offices, a café office and the Döveç Maintenance Office support professional rental management and sustained investment returns.'},
+    tags:{tr:['Resort Yaşam','950 Ünite','Padel & Spor'], en:['Resort Living','950 Units','Padel & Sports']},
     units:[
       {tr:'Stüdyo',     en:'Studio'},
       {tr:'1+1',        en:'1+1'},
@@ -867,11 +923,18 @@ const PROJECTS = [
     ]},
   {id:'laisla', span:'std', gal:18,
     name:'La Isla',
-    label:{tr:'Ötüken · Long Beach', en:'Ötüken · Long Beach'},
-    sub:{tr:'Yatay Mimari · 210 Ünite', en:'Horizontal Architecture · 210 Units'},
-    desc:{tr:'Long Beach bölgesi, Ötüken’de çevreye duyarlı bir yaşam projesi. “Yatay mimari” anlayışıyla tasarlanan La Isla; 2+1, 3+1, 4+1 ve 5+1 daire tiplerinden oluşan 210 üniteyi kapsar. Yeşil enerji ve çevre dostu malzemelerle sürdürülebilirliği önceler. Site içinde spor salonu, süpermarket, kasap, eczane, Döveç Bakım Ofisi, kafe, restoran, spor barı ile ocakbaşı & meze günlük yaşamın tamamını kapı önüne getirir.',
-          en:'An eco-conscious community in Ötüken, Long Beach. Designed around “horizontal architecture”, La Isla comprises 210 units in 2+1, 3+1, 4+1 and 5+1 layouts, prioritising sustainability through green energy and eco-friendly materials. An on-site gym, supermarket, butcher, pharmacy, Döveç Maintenance Office, coffee shop, restaurant, sports bar and ocakbaşı & meze bring daily life to the doorstep.'},
-    tags:{tr:['Yatay Mimari','210 Ünite','Site İçi Çarşı'], en:['Horizontal Design','210 Units','On-Site Arcade']},
+    label:{tr:'Ötüken · İskele', en:'Ötüken · İskele'},
+    sub:{tr:'Yatay Mimari · 211 Konut', en:'Horizontal Architecture · 211 Homes'},
+    slogan:{tr:'Modern Mimari, Sonsuz Huzur', en:'Modern Architecture, Endless Serenity'},
+    facts:[
+      ['loc',      {tr:'Ötüken · İskele',       en:'Ötüken · İskele'}],
+      ['units',    {tr:'211 konut',             en:'211 homes'}],
+      ['concept',  {tr:'Yatay mimari · 2+1’den 5+1’e', en:'Horizontal architecture · 2+1 to 5+1'}],
+      ['delivery', {tr:'2025',                  en:'2025'}]
+    ],
+    desc:{tr:'İskele Ötüken’de çevreye duyarlı bir yaşam projesi. “Yatay mimari” anlayışıyla tasarlanan La Isla Villas; 2+1, 3+1, 4+1 ve 5+1 daire tiplerinden oluşan 211 konutu kapsar. Yeşil enerji ve çevre dostu malzemelerle sürdürülebilirliği önceler. Site içinde spor salonu, süpermarket, kasap, eczane, Döveç Bakım Ofisi, kafe, restoran, spor barı ile ocakbaşı & meze günlük yaşamın tamamını kapı önüne getirir.',
+          en:'An eco-conscious community in Ötüken, İskele. Designed around “horizontal architecture”, La Isla Villas comprises 211 homes in 2+1, 3+1, 4+1 and 5+1 layouts, prioritising sustainability through green energy and eco-friendly materials. An on-site gym, supermarket, butcher, pharmacy, Döveç Maintenance Office, coffee shop, restaurant, sports bar and ocakbaşı & meze bring daily life to the doorstep.'},
+    tags:{tr:['Yatay Mimari','211 Konut','Site İçi Çarşı'], en:['Horizontal Design','211 Homes','On-Site Arcade']},
     units:[
       {tr:'2+1 Daire', en:'2+1 Apartment'},
       {tr:'3+1 Daire', en:'3+1 Apartment'},
@@ -888,10 +951,19 @@ const PROJECTS = [
   {id:'fs2', span:'std', gal:2,
     name:'Four Seasons Life 2',
     label:{tr:'İskele · Hazır Teslim', en:'İskele · Ready to Move'},
-    sub:{tr:'Denize Sıfır · 329 Ünite', en:'Seafront · 329 Units'},
-    desc:{tr:'İskele sahil şeridinde, modern lüksü Akdeniz’in doğal güzelliğiyle uyumla buluşturan denize sıfır bir topluluk. Stüdyo, 1+1, 1+1 loft ve 2+1 seçenekleriyle 329 üniteden oluşan Four Seasons Life 2; aqua park, Seasons Restoran, havuz barı ve kumsal barı, spa, spor salonu, su sporları, çocuk oyun alanı ile yürüyüş ve bisiklet yollarını bir arada sunar. Profesyonel kiralama yönetimiyle yüksek getiri arayan yatırımcılar için idealdir.',
-          en:'A seafront community on the İskele shoreline, blending modern luxury with the natural beauty of the coast. With 329 units across studios, 1+1, 1+1 loft and 2+1 layouts, Four Seasons Life 2 brings together an aqua park, Seasons Restaurant, pool and beach bars, spa, gym, water sports, a kids playground and walking & cycling tracks. Professional rental management makes it ideal for investors seeking high-yield seaside property.'},
-    tags:{tr:['Denize Sıfır','329 Ünite','Hazır Teslim'], en:['Seafront','329 Units','Ready']},
+    sub:{tr:'Özel Plaj · 329 Konut', en:'Private Beach · 329 Homes'},
+    slogan:{tr:'Prestijli Hayat Standardı Devam Ediyor', en:'The Standard of Prestigious Living Continues'},
+    facts:[
+      ['loc',       {tr:'İskele',                     en:'İskele'}],
+      ['units',     {tr:'329 konut · daire & villa',  en:'329 homes · apartments & villas'}],
+      ['area',      {tr:'106.000 m²',                 en:'106,000 m²'}],
+      ['beach',     {tr:'Özel plaj',                  en:'Private beach'}],
+      ['privilege', {tr:'FSL II & III sahipleri FSL I olanaklarından yararlanır', en:'FSL II & III owners enjoy FSL I facilities'}],
+      ['delivery',  {tr:'2024',                       en:'2024'}]
+    ],
+    desc:{tr:'İskele sahil şeridinde, 106.000 m²’lik alan üzerinde modern lüksü Akdeniz’in doğal güzelliğiyle buluşturan özel plajlı bir topluluk. Stüdyo, 1+1, 1+1 loft ve 2+1 seçenekleriyle 329 konuttan oluşan Four Seasons Life 2; aqua park, Seasons Restoran, havuz barı ve kumsal barı, spa, spor salonu, su sporları, çocuk oyun alanı ile yürüyüş ve bisiklet yollarını bir arada sunar. Four Seasons Life II ve III mülk sahipleri, Four Seasons Life I’deki olanaklardan da yararlanabilir. Profesyonel kiralama yönetimiyle yüksek getiri arayan yatırımcılar için idealdir.',
+          en:'A private-beach community on the İskele shoreline, set across 106,000 m², blending modern luxury with the natural beauty of the coast. With 329 homes across studios, 1+1, 1+1 loft and 2+1 layouts, Four Seasons Life 2 brings together an aqua park, Seasons Restaurant, pool and beach bars, spa, gym, water sports, a kids playground and walking & cycling tracks. Owners at Four Seasons Life II and III also enjoy the facilities of Four Seasons Life I, and professional rental management makes it ideal for investors seeking high-yield seaside property.'},
+    tags:{tr:['Özel Plaj','329 Konut','Hazır Teslim'], en:['Private Beach','329 Homes','Ready']},
     units:[
       {tr:'Stüdyo',   en:'Studio'},
       {tr:'1+1',      en:'1+1'},
@@ -913,10 +985,18 @@ const PROJECTS = [
   {id:'fourseasons', span:'wide', gal:4,
     name:'Four Seasons Life',
     label:{tr:'İskele · Deniz Cephesi', en:'İskele · Seafront'},
-    sub:{tr:'Tamamlanmış Sahil Topluluğu', en:'Completed Beachfront Community'},
-    desc:{tr:'İskele’de, özel plaj erişimine sahip tamamlanmış ve yaşayan bir sahil topluluğu. Four Seasons Life I; stüdyo, 1+1, 1+1 loft, 2+1 bahçe katı ve 2+1 çatı teraslı daireler ile 2+1 ve 3+1 yarı müstakil villaları — denize sıfır, özel havuzlu 3+1 villalar dahil — bir arada sunar. Aqua park, Seasons Restoran, havuz ve kumsal barları, spa, spor salonu, su sporları, çocuk oyun alanı, yürüyüş ve bisiklet yollarıyla Akdeniz yaşam tarzını tamamlar. Site içinde işleyen profesyonel kiralama yönetim sistemi, ev sahiplerine istikrarlı getiri ve bakım sağlar.',
-          en:'A completed, thriving beachfront community in İskele with private beach access. Four Seasons Life I brings together studios, 1+1, 1+1 loft, 2+1 garden-floor and 2+1 roof-terrace apartments alongside 2+1 and 3+1 semi-detached villas — including seafront 3+1 villas with private pools. An aqua park, Seasons Restaurant, pool and beach bars, spa, gym, water sports, kids playground and walking & cycling tracks complete the Mediterranean lifestyle. An on-site professional rental management system provides owners with consistent returns and maintenance.'},
-    tags:{tr:['Deniz Cephesi','Özel Plaj','Tamamlandı'], en:['Seafront','Private Beach','Completed']},
+    sub:{tr:'Özel Plaj · 420 Konut', en:'Private Beach · 420 Homes'},
+    slogan:{tr:'Prestijli Yaşamın Yeni Standardı', en:'The New Standard of Prestigious Living'},
+    facts:[
+      ['loc',      {tr:'İskele',                     en:'İskele'}],
+      ['units',    {tr:'420 konut · daire & villa',  en:'420 homes · apartments & villas'}],
+      ['area',     {tr:'102.000 m²',                 en:'102,000 m²'}],
+      ['beach',    {tr:'Özel plaj',                  en:'Private beach'}],
+      ['delivery', {tr:'2020 · tamamlandı',          en:'2020 · completed'}]
+    ],
+    desc:{tr:'İskele’de, 102.000 m²’lik alan üzerinde özel plaj erişimine sahip tamamlanmış ve yaşayan bir sahil topluluğu. 420 konuttan oluşan Four Seasons Life I; stüdyo, 1+1, 1+1 loft, 2+1 bahçe katı ve 2+1 çatı teraslı daireler ile 2+1 ve 3+1 yarı müstakil villaları — denize sıfır, özel havuzlu 3+1 villalar dahil — bir arada sunar. Aqua park, Seasons Restoran, havuz ve kumsal barları, spa, spor salonu, su sporları, çocuk oyun alanı, yürüyüş ve bisiklet yollarıyla Akdeniz yaşam tarzını tamamlar. Site içinde işleyen profesyonel kiralama yönetim sistemi, ev sahiplerine istikrarlı getiri ve bakım sağlar.',
+          en:'A completed, thriving beachfront community in İskele across 102,000 m² with private beach access. Its 420 homes bring together studios, 1+1, 1+1 loft, 2+1 garden-floor and 2+1 roof-terrace apartments alongside 2+1 and 3+1 semi-detached villas — including seafront 3+1 villas with private pools. An aqua park, Seasons Restaurant, pool and beach bars, spa, gym, water sports, kids playground and walking & cycling tracks complete the Mediterranean lifestyle. An on-site professional rental management system provides owners with consistent returns and maintenance.'},
+    tags:{tr:['420 Konut','Özel Plaj','Tamamlandı'], en:['420 Homes','Private Beach','Completed']},
     units:[
       {cat:{tr:'Daireler', en:'Apartments'}, items:[
         {tr:'Stüdyo',             en:'Studio'},
@@ -945,16 +1025,24 @@ const PROJECTS = [
     ]},
   {id:'panorama', span:'wide', gal:2,
     name:'Panorama',
-    label:{tr:'İskele · KKTC', en:'İskele · TRNC'},
-    sub:{tr:'Kentsel Yaşam · Tamamlandı', en:'Urban Living · Completed'},
-    desc:{tr:'İskele’de tamamlanmış bir lüks konut projesi. “Yeniden tanımlanan şehir yaşamı” anlayışıyla Panorama; stüdyo, 1+1, 2+1 ve 3+1 daire seçenekleri sunar. The SUITE Rooftop Bar, Delicious Panorama restoranı, yüzme havuzu, fitness merkezi, sauna ve çocuk oyun alanıyla resort konforunu merkezî konumla birleştirir. 7/24 güvenlik ve profesyonel bakım sağlar.',
-          en:'A completed luxury residential development in İskele. Embracing “city living, redefined”, Panorama offers studio, 1+1, 2+1 and 3+1 apartments. The SUITE Rooftop Bar, Delicious Panorama restaurant, swimming pool, fitness centre, sauna and kids playground combine resort comfort with a central location, backed by 24/7 security and professional maintenance.'},
+    label:{tr:'Long Beach · İskele', en:'Long Beach · İskele'},
+    sub:{tr:'Deniz & Şehir Manzarası · Tamamlandı', en:'Sea & City Views · Completed'},
+    slogan:{tr:'Her Gün Manzara, Her Gün Değer', en:'A View Every Day, Value Every Day'},
+    facts:[
+      ['loc',      {tr:'Long Beach · İskele',    en:'Long Beach · İskele'}],
+      ['view',     {tr:'Deniz ve şehir manzarası', en:'Sea and city views'}],
+      ['dist',     {tr:'Denize 400 m',           en:'400 m to the sea'}],
+      ['delivery', {tr:'2023 · tamamlandı',      en:'2023 · completed'}]
+    ],
+    desc:{tr:'İskele Long Beach’te, denize 400 metre mesafede tamamlanmış bir lüks konut projesi. “Yeniden tanımlanan şehir yaşamı” anlayışıyla Long Beach Panorama; stüdyo, 1+1, 2+1, 3+1 ve penthouse seçenekleriyle hem deniz hem şehir manzarası sunar. The SUITE Rooftop Bar, Delicious Panorama restoranı, yüzme havuzu, fitness merkezi, sauna ve çocuk oyun alanıyla resort konforunu merkezî konumla birleştirir. 7/24 güvenlik ve profesyonel bakım sağlar.',
+          en:'A completed luxury residential development 400 metres from the sea in İskele’s Long Beach. Embracing “city living, redefined”, Long Beach Panorama offers studio, 1+1, 2+1, 3+1 and penthouse layouts with both sea and city views. The SUITE Rooftop Bar, Delicious Panorama restaurant, swimming pool, fitness centre, sauna and kids playground combine resort comfort with a central location, backed by 24/7 security and professional maintenance.'},
     tags:{tr:['Kentsel','Rooftop Bar','Tamamlandı'], en:['Urban','Rooftop Bar','Completed']},
     units:[
-      {tr:'Stüdyo', en:'Studio'},
-      {tr:'1+1',    en:'1+1'},
-      {tr:'2+1',    en:'2+1'},
-      {tr:'3+1',    en:'3+1'}
+      {tr:'Stüdyo',    en:'Studio'},
+      {tr:'1+1',       en:'1+1'},
+      {tr:'2+1',       en:'2+1'},
+      {tr:'3+1',       en:'3+1'},
+      {tr:'Penthouse', en:'Penthouse'}
     ],
     facils:[
       {ic:'bar',        tr:'The SUITE Rooftop Bar', en:'The SUITE Rooftop Bar'},
@@ -966,11 +1054,18 @@ const PROJECTS = [
     ]},
   {id:'fs3', span:'wide', gal:0,
     name:'Four Seasons Life 3',
-    label:{tr:'İskele · Deniz Cephesi', en:'İskele · Seafront'},
-    sub:{tr:'Deniz Cephesi · 738 Ünite', en:'Seafront · 738 Units'},
-    desc:{tr:'İskele’de denize sıfır bir yaşam projesi. “Açık alanlar ve mavi ufuklar” temasıyla Four Seasons Life III; stüdyo, 1+1, 1+1 loft, 2+1 ve 3+1 dairelerden oluşan 738 üniteyi kapsar. Aqua park, havuz ve kumsal barları, spa, spor salonu, su sporları, çocuk oyun alanı ile yürüyüş ve bisiklet yolları sunar. Profesyonel kiralama yönetimiyle yatırımcılara uygundur.',
-          en:'A direct-to-sea development in İskele. Themed around “open spaces and blue horizons”, Four Seasons Life III spans 738 units across studio, 1+1, 1+1 loft, 2+1 and 3+1 layouts. It offers an aqua park, pool and beach bars, spa, gym, water sports, a kids playground and walking & cycling tracks, with professional rental management for investors.'},
-    tags:{tr:['Deniz Cephesi','738 Ünite','Aqua Park'], en:['Seafront','738 Units','Aqua Park']},
+    label:{tr:'Boğaz · İskele', en:'Boğaz · İskele'},
+    sub:{tr:'Doğayla Uyumlu Yaşam · 738 Ünite', en:'Living in Harmony with Nature · 738 Units'},
+    slogan:{tr:'Doğayla Uyumlu Modern Yaşam', en:'Modern Living in Harmony with Nature'},
+    facts:[
+      ['loc',       {tr:'Boğaz · İskele',  en:'Boğaz · İskele'}],
+      ['units',     {tr:'738 ünite',       en:'738 units'}],
+      ['dist',      {tr:'Denize 600 m',    en:'600 m to the sea'}],
+      ['privilege', {tr:'FSL II & III sahipleri FSL I olanaklarından yararlanır', en:'FSL II & III owners enjoy FSL I facilities'}]
+    ],
+    desc:{tr:'İskele Boğaz’da, denize 600 metre mesafede doğayla uyumlu bir yaşam projesi. “Açık alanlar ve mavi ufuklar” temasıyla Four Seasons Life III; stüdyo, 1+1, 1+1 loft, 2+1 ve 3+1 dairelerden oluşan 738 üniteyi kapsar. Four Seasons Life II ve III mülk sahipleri, Four Seasons Life I’deki olanaklardan da yararlanabilir. Aqua park, havuz ve kumsal barları, spa, spor salonu, su sporları, çocuk oyun alanı ile yürüyüş ve bisiklet yolları sunar. Profesyonel kiralama yönetimiyle yatırımcılara uygundur.',
+          en:'A nature-led development in İskele’s Boğaz, 600 metres from the sea. Themed around “open spaces and blue horizons”, Four Seasons Life III spans 738 units across studio, 1+1, 1+1 loft, 2+1 and 3+1 layouts. Owners at Four Seasons Life II and III also enjoy the facilities of Four Seasons Life I. It offers an aqua park, pool and beach bars, spa, gym, water sports, a kids playground and walking & cycling tracks, with professional rental management for investors.'},
+    tags:{tr:['Boğaz','738 Ünite','Aqua Park'], en:['Boğaz','738 Units','Aqua Park']},
     units:[
       {tr:'Stüdyo',   en:'Studio'},
       {tr:'1+1',      en:'1+1'},
@@ -992,10 +1087,19 @@ const PROJECTS = [
   {id:'clb', span:'wide', gal:0,
     name:'Courtyard Long Beach',
     label:{tr:'Long Beach · İskele', en:'Long Beach · İskele'},
-    sub:{tr:'5★ Resort Rezidans · Tamamlandı', en:'5★ Resort Residence · Completed'},
-    desc:{tr:'İskele’de tamamlanmış, ödüllü bir lüks konut projesi. Courtyard Long Beach; stüdyo, 1+1, 2+1, 2+1 penthouse ve 3+1 seçenekleriyle “5 yıldızlı resort atmosferi” sunar. Aqua park, kapalı havuz, SPA, Türk hamamı, güzellik merkezi, fitness, mini golf, Kids Club ve çocuk oyun alanının yanı sıra Delicious restoranı, Score Bar ve D-MAR Market site içinde hizmet verir. Topluluk yaşamını önceleyen proje, profesyonel kiralama yönetimiyle yatırım getirisini destekler.',
-          en:'A completed, award-winning luxury development in İskele. Courtyard Long Beach offers a “5-star resort atmosphere” across studios, 1+1, 2+1, 2+1 penthouse and 3+1 layouts. An aqua park, indoor pool, spa, Turkish hamam, beauty centre, fitness centre, mini golf, Kids Club and kids playground are joined on site by the Delicious restaurant, Score Bar and D-MAR Market. Emphasising community living, the project supports investment returns through professional rental management.'},
-    tags:{tr:['5★ Resort','Ödüllü','Tamamlandı'], en:['5★ Resort','Award-Winning','Completed']},
+    sub:{tr:'5★ Otel Konseptli Rezidans · 420 Daire', en:'5★ Hotel-Concept Residence · 420 Apartments'},
+    slogan:{tr:'Tatil Konseptinde Kazandıran Yaşam', en:'Resort-Concept Living That Pays Back'},
+    facts:[
+      ['loc',      {tr:'Long Beach · İskele',           en:'Long Beach · İskele'}],
+      ['units',    {tr:'420 daire',                     en:'420 apartments'}],
+      ['blocks',   {tr:'4 katlı bloklar',               en:'4-storey blocks'}],
+      ['concept',  {tr:'5 yıldızlı otel konseptli rezidans', en:'5-star hotel-concept residence'}],
+      ['dist',     {tr:'Denize 600 m',                  en:'600 m to the sea'}],
+      ['delivery', {tr:'2020 · tamamlandı',             en:'2020 · completed'}]
+    ],
+    desc:{tr:'İskele Long Beach’te, denize 600 metre mesafede tamamlanmış ve ödüllü bir lüks konut projesi. Dört katlı bloklardan oluşan Courtyard Long Beach; stüdyo, 1+1, 2+1, 2+1 penthouse ve 3+1 seçenekleriyle 420 dairede “5 yıldızlı otel konseptli rezidans” deneyimi sunar. Aqua park, kapalı havuz, SPA, Türk hamamı, güzellik merkezi, fitness, mini golf, Kids Club ve çocuk oyun alanının yanı sıra Delicious restoranı, Score Bar ve D-MAR Market site içinde hizmet verir. Topluluk yaşamını önceleyen proje, profesyonel kiralama yönetimiyle yatırım getirisini destekler.',
+          en:'A completed, award-winning luxury development 600 metres from the sea in İskele’s Long Beach. Built as four-storey blocks, Courtyard Long Beach delivers a “5-star hotel-concept residence” experience across 420 apartments in studio, 1+1, 2+1, 2+1 penthouse and 3+1 layouts. An aqua park, indoor pool, spa, Turkish hamam, beauty centre, fitness centre, mini golf, Kids Club and kids playground are joined on site by the Delicious restaurant, Score Bar and D-MAR Market. Emphasising community living, the project supports investment returns through professional rental management.'},
+    tags:{tr:['5★ Otel Konsepti','420 Daire','Tamamlandı'], en:['5★ Hotel Concept','420 Apartments','Completed']},
     units:[
       {tr:'Stüdyo',        en:'Studio'},
       {tr:'1+1',           en:'1+1'},
@@ -1053,6 +1157,7 @@ const I18N = {
   watch:{tr:'İZLE', en:'WATCH'},
   scroll:{tr:'Kaydır', en:'Scroll'},
   detailsTitle:{tr:'Proje Detayları', en:'Project Details'},
+  factsTitle:{tr:'Proje Künyesi', en:'Project Facts'},
   unitsTitle:{tr:'Daire Tipleri', en:'Unit Types'},
   facilsTitle:{tr:'Olanaklar', en:'Facilities'},
   moreInfo:{tr:'Daha Fazla Bilgi', en:'More Information'},
@@ -1378,9 +1483,11 @@ function openDetail(id){
     </div>
     <div class="d-intro">
       <div class="d-intro-eyebrow">${I18N.aboutEyebrow[lang]}</div>
+      ${p.slogan?`<p class="d-slogan">${p.slogan[lang]}</p>`:''}
       <p class="d-desc">${p.desc[lang]}</p>
       <div class="d-tags">${tags}</div>
     </div>
+    ${buildFacts(p)}
     ${unitsHTML}
     ${facHTML}
     ${imgs.length>1?`<div class="photo-section">
@@ -1468,6 +1575,33 @@ function buildVideoCards(p){
   }).filter(Boolean).join('') : emptyCard(0);
   return `<div class="video-row" id="videoRow">${cards}</div>`;
 }
+/* proje künyesi — facts:[['anahtar',{tr,en}], ...] */
+const FACT_K = {
+  loc:     {tr:'Konum',           en:'Location'},
+  units:   {tr:'Ünite Sayısı',    en:'Units'},
+  area:    {tr:'Arsa Alanı',      en:'Site Area'},
+  blocks:  {tr:'Blok & Kat',      en:'Blocks & Floors'},
+  dist:    {tr:'Denize Uzaklık',  en:'Distance to Sea'},
+  delivery:{tr:'Teslim',          en:'Delivery'},
+  view:    {tr:'Manzara',         en:'View'},
+  concept: {tr:'Konsept',         en:'Concept'},
+  beach:   {tr:'Plaj',            en:'Beach'},
+  privilege:{tr:'Ayrıcalık',      en:'Privilege'}
+};
+function buildFacts(p){
+  if(!p.facts || !p.facts.length) return '';
+  const items = p.facts.map(f=>`<div class="fact-item">
+      <span class="fact-k">${FACT_K[f[0]] ? FACT_K[f[0]][lang] : f[0]}</span>
+      <span class="fact-v">${f[1][lang]}</span></div>`).join('');
+  return `<div class="facts-section">
+      <div class="vs-head">
+        <h3 class="serif"><span class="vs-ico"><svg viewBox="0 0 24 24"><path d="M6 2h8.5L19 6.5V22H6z"/><path d="M8.6 9.5h7.8v1.5H8.6zM8.6 13h7.8v1.5H8.6zM8.6 16.5h5v1.5h-5z" fill="#0C2340"/></svg></span>${I18N.factsTitle[lang]}</h3>
+        <span class="vs-line"></span>
+      </div>
+      <div class="fact-grid">${items}</div>
+    </div>`;
+}
+
 /* daire tipleri — düz liste veya {cat, items} grupları */
 function buildUnits(p){
   if(!p.units || !p.units.length) return '';
