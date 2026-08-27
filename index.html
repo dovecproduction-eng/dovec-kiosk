@@ -1541,6 +1541,7 @@ function openDetail(id){
 
   document.getElementById('detail').classList.add('open');
   document.getElementById('detailBody').scrollTop = 0;
+  durumKaydet();
 }
 let galleryIO = null;
 function closeDetail(){
@@ -1550,6 +1551,7 @@ function closeDetail(){
   document.querySelectorAll('#detailBody .ipanel-img').forEach(im=>{ im.style.backgroundImage='none'; });
   document.getElementById('detail').classList.remove('open');
   document.getElementById('detailBody').innerHTML='';
+  durumKaydet();
 }
 
 /* ---- lüks video lightbox ---- */
@@ -1734,7 +1736,7 @@ function applyLang(){
   buildDeck();
 }
 document.querySelectorAll('.lang-switch button').forEach(b=>{
-  b.addEventListener('click',()=>{ lang = b.dataset.lang; applyLang(); });
+  b.addEventListener('click',()=>{ lang = b.dataset.lang; applyLang(); durumKaydet(); });
 });
 
 /* ---- hero geçiş: sunuma giriş → hero kapanır + deck açılır ---- */
@@ -1764,7 +1766,47 @@ document.getElementById('homeLogo').addEventListener('click',()=>{
   closeDetail();
   document.getElementById('hero').classList.remove('dismissed');
   heroVideo(true);
+  durumKaydet();
 });
+
+/* ============================================================
+   OYNATICI YENİLEMESİNE KARŞI YER KORUMA
+   Kiosk, bir signage oynatıcısı (iiSignage vb.) üzerinden gösteriliyor.
+   Oynatıcı içeriği kendi zamanlayıcısıyla yenileyebiliyor; bu, ziyaretçi
+   projeleri gezerken sayfayı baştan başlatıyor. Sayfa bu yenilemeyi
+   engelleyemez — ama yeniden yüklenirken ziyaretçinin kaldığı yeri geri
+   getirebilir. Ekran gerçekten boştaysa (son dokunuştan 2 dk geçmişse)
+   normal şekilde hero'dan başlar, böylece yeni ziyaretçi baştan karşılanır.
+   ============================================================ */
+const DURUM_ANAHTARI = 'kios_durum';
+const GERI_YUKLEME_PENCERESI = 2*60*1000;   // son dokunuştan en fazla 2 dk
+let sonEtkinlik = Date.now();
+
+function durumKaydet(){
+  try{
+    const acik = id => { const e=document.getElementById(id); return e && e.classList.contains('open'); };
+    let ekran = 'hero';
+    if(acik('detail'))                                                    ekran = 'detay';
+    else if(acik('deck'))                                                 ekran = 'deck';
+    else if(document.getElementById('hero').classList.contains('dismissed')) ekran = 'izgara';
+    localStorage.setItem(DURUM_ANAHTARI, JSON.stringify({
+      ekran, proje: (window._curP ? window._curP.id : null), dil: lang, t: sonEtkinlik
+    }));
+  }catch(e){}
+}
+
+function durumGeriYukle(){
+  let d = null;
+  try{ d = JSON.parse(localStorage.getItem(DURUM_ANAHTARI) || 'null'); }catch(e){}
+  if(!d || !d.t) return;
+  if(Date.now() - d.t > GERI_YUKLEME_PENCERESI) return;   // ekran boştaydı → hero'dan başla
+  if(d.dil && d.dil !== lang){ lang = d.dil; applyLang(); }
+  if(d.ekran === 'hero') return;
+  document.getElementById('hero').classList.add('dismissed');
+  heroVideo(false);
+  if(d.ekran === 'deck'){ openDeck(); return; }
+  if(d.ekran === 'detay' && d.proje && PROJECTS.some(x=>x.id===d.proje)) openDetail(d.proje);
+}
 
 /* ============================================================
    KIOSK BELLEK BAKIMI
@@ -1779,8 +1821,13 @@ document.getElementById('homeLogo').addEventListener('click',()=>{
   const BOSTA_ESIGI      = 3*60*1000;     // en az 3 dk dokunulmamış olmalı
   const acilis = Date.now();
   let sonDokunus = Date.now();
+  let sonKayit = 0;
   ['pointerdown','keydown','wheel','touchstart','scroll'].forEach(ev=>{
-    document.addEventListener(ev, ()=>{ sonDokunus = Date.now(); }, {passive:true, capture:true});
+    document.addEventListener(ev, ()=>{
+      sonDokunus = sonEtkinlik = Date.now();
+      // dokunuşun yol açtığı gezinme tamamlansın diye kısa gecikmeyle, en fazla 2 sn'de bir
+      if(Date.now()-sonKayit > 2000){ sonKayit = Date.now(); setTimeout(durumKaydet, 400); }
+    }, {passive:true, capture:true});
   });
   setInterval(()=>{
     if(Date.now()-acilis    < YENILEME_ARALIGI) return;  // 4 saat henüz dolmadı
@@ -1895,8 +1942,9 @@ function openDeck(){
   buildDeck();
   document.getElementById('deck').classList.add('open');
   resetAuto();
+  durumKaydet();
 }
-function closeDeck(){ document.getElementById('deck').classList.remove('open'); stopAuto(); }
+function closeDeck(){ document.getElementById('deck').classList.remove('open'); stopAuto(); durumKaydet(); }
 
 document.getElementById('presentBtn').addEventListener('click', openDeck);
 document.getElementById('deckClose').addEventListener('click', closeDeck);
@@ -1944,6 +1992,7 @@ document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeImg(); });
 
 /* init */
 applyLang();
+durumGeriYukle();   // oynatıcı sayfayı yenilediyse ziyaretçinin yerini geri getir
 </script>
 </body>
 </html>
