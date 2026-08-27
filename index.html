@@ -1420,7 +1420,7 @@ function openDetail(id){
         .map(s=>`gorseller/dovec/${p.id}/${p.id}_${s}.webp`);
 
   const panels = imgs.map((src,i)=>`<div class="ipanel ${i===0?'active':''}" data-i="${i}" data-src="${src}">
-      <div class="ipanel-img" style="background-image:url('${src}')"></div>
+      <div class="ipanel-img" data-bg="${src}"${i===0?` style="background-image:url('${src}')"`:''}></div>
       <div class="ipanel-shadow"></div>
       <button class="ipanel-fs" data-fs="${src}" title="${I18N.fullscreen[lang]}" aria-label="${I18N.fullscreen[lang]}">
         <svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
@@ -1518,6 +1518,21 @@ function openDetail(id){
     sel.querySelectorAll('.ipanel-fs').forEach(btn=>{
       btn.addEventListener('click',(e)=>{ e.stopPropagation(); openImg(btn.dataset.fs); });
     });
+    /* KADEMELİ YÜKLEME: galeri yatay kaydırmalı ve panellerin çoğu ekran
+       dışında. Yalnızca görüş alanına yaklaşan kareler belleğe alınır —
+       16 kareli bir galeride hiç bakılmayan görseller hiç çözülmez. */
+    if(galleryIO){ galleryIO.disconnect(); }
+    galleryIO = new IntersectionObserver((entries,obs)=>{
+      entries.forEach(en=>{
+        if(!en.isIntersecting) return;
+        const im = en.target.querySelector('.ipanel-img');
+        if(im && im.dataset.bg && !im.style.backgroundImage){
+          im.style.backgroundImage = `url('${im.dataset.bg}')`;
+        }
+        obs.unobserve(en.target);
+      });
+    }, {root: sel, rootMargin: '0px 700px'});
+    panelEls.forEach(pn=>galleryIO.observe(pn));
   }
   // video kartları → lightbox oynatma
   document.querySelectorAll('#detailBody .vcard[data-src],#detailBody .vcard[data-vid]').forEach(c=>{
@@ -1527,7 +1542,15 @@ function openDetail(id){
   document.getElementById('detail').classList.add('open');
   document.getElementById('detailBody').scrollTop = 0;
 }
-function closeDetail(){ closeVideo(); document.getElementById('detail').classList.remove('open'); document.getElementById('detailBody').innerHTML=''; }
+let galleryIO = null;
+function closeDetail(){
+  closeVideo();
+  if(galleryIO){ galleryIO.disconnect(); galleryIO = null; }
+  // galeri görsellerini bellekten bırak, sonra düğümleri sil
+  document.querySelectorAll('#detailBody .ipanel-img').forEach(im=>{ im.style.backgroundImage='none'; });
+  document.getElementById('detail').classList.remove('open');
+  document.getElementById('detailBody').innerHTML='';
+}
 
 /* ---- lüks video lightbox ---- */
 function openVideo(card){
@@ -1715,8 +1738,14 @@ document.querySelectorAll('.lang-switch button').forEach(b=>{
 });
 
 /* ---- hero geçiş: sunuma giriş → hero kapanır + deck açılır ---- */
+function heroVideo(oynat){
+  const v = document.querySelector('.hero-video');
+  if(!v) return;
+  try{ oynat ? v.play() : v.pause(); }catch(e){}
+}
 document.getElementById('discoverBtn').addEventListener('click',()=>{
   document.getElementById('hero').classList.add('dismissed');
+  heroVideo(false);   // hero ekran dışına çıkınca video boşuna çözülmesin
   openDeck();
 });
 document.getElementById('backBtn').addEventListener('click', closeDetail);
@@ -1734,7 +1763,34 @@ document.addEventListener('keydown',(e)=>{ if(e.key==='Escape'){ closeVideo(); c
 document.getElementById('homeLogo').addEventListener('click',()=>{
   closeDetail();
   document.getElementById('hero').classList.remove('dismissed');
+  heroVideo(true);
 });
+
+/* ============================================================
+   KIOSK BELLEK BAKIMI
+   Cihaz günlerce açık kaldığında tarayıcı belleği şişer ve sekme
+   çökebilir (çöken sekme yeniden yüklenince ana sayfaya düşer).
+   Çözüm: 4 saatte bir sayfayı sessizce yenile — ama YALNIZCA kimse
+   kullanmıyorken. Ziyaretçi ekranla ilgilenirken asla devreye girmez;
+   koşullar sağlanana kadar bekler.
+   ============================================================ */
+(function(){
+  const YENILEME_ARALIGI = 4*60*60*1000;  // 4 saat açık kaldıktan sonra
+  const BOSTA_ESIGI      = 3*60*1000;     // en az 3 dk dokunulmamış olmalı
+  const acilis = Date.now();
+  let sonDokunus = Date.now();
+  ['pointerdown','keydown','wheel','touchstart','scroll'].forEach(ev=>{
+    document.addEventListener(ev, ()=>{ sonDokunus = Date.now(); }, {passive:true, capture:true});
+  });
+  setInterval(()=>{
+    if(Date.now()-acilis    < YENILEME_ARALIGI) return;  // 4 saat henüz dolmadı
+    if(Date.now()-sonDokunus < BOSTA_ESIGI)     return;  // biri kullanıyor, bekle
+    if(!navigator.onLine)                       return;  // internet yoksa yenileme (hata sayfası riski)
+    const acikMi = id => { const e=document.getElementById(id); return e && e.classList.contains('open'); };
+    if(acikMi('vlight') || acikMi('imglight'))  return;  // video/görsel açıkken bekle
+    location.reload();
+  }, 60*1000);
+})();
 
 /* aşağı kaydırınca başlık yazıları kaybolsun, başa dönünce geri gelsin */
 (function(){
