@@ -415,6 +415,24 @@ body{
 .unit-chip{display:flex;align-items:center;gap:13px;padding:16px 24px 16px 17px;border-radius:14px;
   border:1px solid rgba(226,192,121,.2);background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));
   transition:.35s var(--ease)}
+.unit-chip.has-tour{cursor:pointer;border-color:rgba(226,192,121,.45)}
+.unit-chip.has-tour:hover{border-color:var(--gold-light);box-shadow:0 18px 46px rgba(8,26,48,.4)}
+.unit-chip .u-tour{margin-left:auto;font-family:'Karla',sans-serif;font-size:.72rem;font-weight:700;letter-spacing:.14em;
+  color:var(--navy-deep);background:var(--gold);border-radius:999px;padding:5px 11px;flex:0 0 auto}
+.tur-katman{position:fixed;inset:0;z-index:9000;display:flex;flex-direction:column;background:var(--navy-deep);
+  opacity:0;pointer-events:none;transition:opacity .3s var(--ease)}
+.tur-katman.acik{opacity:1;pointer-events:auto}
+.tur-ust{display:flex;align-items:center;gap:22px;padding:22px 34px;border-bottom:1px solid rgba(197,146,58,.35);flex:0 0 auto}
+.tur-baslik{font-family:'Playfair Display',serif;font-size:1.7rem;color:#fff}
+.tur-etiket{font-family:'Karla',sans-serif;font-size:.78rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-light)}
+.tur-kapat{margin-left:auto;font-family:'Karla',sans-serif;font-size:.95rem;font-weight:700;letter-spacing:.1em;
+  color:var(--navy-deep);background:var(--gold);border:0;border-radius:12px;padding:16px 30px;cursor:pointer;
+  transition:background .2s var(--ease)}
+.tur-kapat:hover{background:var(--gold-light)}
+.tur-govde{flex:1;position:relative;display:flex}
+.tur-govde iframe{flex:1;border:0;background:#000}
+.tur-bekle{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:'Karla',sans-serif;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.65)}
 .unit-chip:hover{border-color:rgba(226,192,121,.5);transform:translateY(-3px);
   background:linear-gradient(180deg,rgba(226,192,121,.09),rgba(255,255,255,.02))}
 .unit-chip .u-ico{width:34px;height:34px;border-radius:9px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;
@@ -905,7 +923,8 @@ const PROJECTS = [
       {tr:'Stüdyo',     en:'Studio'},
       {tr:'1+1',        en:'1+1'},
       {tr:'1+1 Duplex', en:'1+1 Duplex'},
-      {tr:'2+1 Duplex', en:'2+1 Duplex'}
+      {tr:'2+1 Duplex', en:'2+1 Duplex'},
+      {tr:'3+1',        en:'3+1'}
     ],
     facils:[
       {ic:'cafe',       tr:'Kafe',                  en:'Coffee Shop'},
@@ -1123,6 +1142,15 @@ const PROJECTS = [
     ]}
 ];
 
+/* ---- 360° sanal turlar: daire tipi adına göre (Matterport) ---- */
+const TURLAR = {
+  quarencia: { 'Stüdyo': 'https://my.matterport.com/show/?m=eZ4KVKMP1Fw',
+               '1+1':    'https://my.matterport.com/show/?m=92QSdm4JvHw' },
+  platinum:  { '3+1':    'https://my.matterport.com/show/?m=iUeaj9fyBk1' },
+  laisla:    { '3+1 Daire': 'https://my.matterport.com/show/?m=eM7N6DopSmj' },
+  panorama:  { '2+1':    'https://my.matterport.com/show/?m=RnrtboHS2L7' }
+};
+
 /* ---- proje galerileri: "16-9 görseller" klasöründeki gerçek dosyalar ---- */
 const GALLERIES = {
   clb:['16-9 görseller/COURTYARD/COURTYARD.webp','16-9 görseller/COURTYARD/DJI_0042.webp','16-9 görseller/COURTYARD/DJI_0163.webp','16-9 görseller/COURTYARD/DJI_0164.webp','16-9 görseller/COURTYARD/DJI_0168.webp','16-9 görseller/COURTYARD/DOVEC_00TEST_0179.webp','16-9 görseller/COURTYARD/DOVEC_03_0623.webp','16-9 görseller/COURTYARD/DSC07931.webp','16-9 görseller/COURTYARD/DSC07936.webp','16-9 görseller/COURTYARD/DSC07961.webp'],
@@ -1160,6 +1188,10 @@ const I18N = {
   detailsTitle:{tr:'Proje Detayları', en:'Project Details'},
   factsTitle:{tr:'Proje Künyesi', en:'Project Facts'},
   unitsTitle:{tr:'Daire Tipleri', en:'Unit Types'},
+  tour360:{tr:'360° Sanal Tur', en:'360° Virtual Tour'},
+  tourOpen:{tr:'Daireyi 360° gez', en:'Explore in 360°'},
+  tourClose:{tr:'Kapat', en:'Close'},
+  tourLoading:{tr:'Tur yükleniyor…', en:'Loading tour…'},
   facilsTitle:{tr:'Olanaklar', en:'Facilities'},
   moreInfo:{tr:'Daha Fazla Bilgi', en:'More Information'},
   moreInfoNote:{tr:'Ayrıntılı bilgi için web sitemizi ziyaret edin', en:'Visit our website for more details'},
@@ -1633,9 +1665,14 @@ function buildUnits(p){
   if(!p.units || !p.units.length) return '';
   const groups = p.units[0].items ? p.units : [{cat:null, items:p.units}];
   const wrap = groups.map(g=>{
-    const chips = g.items.map(u=>`<div class="unit-chip">
+    const tours = TURLAR[p.id] || {};
+    const chips = g.items.map(u=>{
+      const tur = tours[u.tr] || tours[u.en];
+      return `<div class="unit-chip${tur?' has-tour':''}"${tur?` data-tur="${tur}" data-tur-ad="${u[lang]}" role="button" tabindex="0"`:''}>
         <span class="u-ico"><svg viewBox="0 0 24 24">${UNIT_ICO[unitIcon(u.en||u.tr)]}</svg></span>
-        <span class="u-name">${u[lang]}</span></div>`).join('');
+        <span class="u-name">${u[lang]}</span>
+        ${tur?`<span class="u-tour">360°</span>`:''}</div>`;
+    }).join('');
     return `<div class="unit-group">${g.cat?`<h4 class="unit-cat">${g.cat[lang]}</h4>`:''}
       <div class="unit-grid">${chips}</div></div>`;
   }).join('');
@@ -1993,6 +2030,61 @@ document.addEventListener('keydown',(e)=>{ if(e.key==='Escape') closeImg(); });
 /* init */
 applyLang();
 durumGeriYukle();   // oynatıcı sayfayı yenilediyse ziyaretçinin yerini geri getir
+
+/* ---- 360° sanal tur penceresi ---- */
+(function(){
+  // Pencere kodu sayfanın sonunda duruyor; öğeler DOM hazır olduğunda bağlanır.
+  function kur(){
+  const katman = document.getElementById('turKatman');
+  const govde  = document.getElementById('turGovde');
+  const baslik = document.getElementById('turBaslik');
+  const etiket = document.getElementById('turEtiket');
+  const kapat  = document.getElementById('turKapat');
+  if(!katman) return;
+
+  function ac(url, ad){
+    baslik.textContent = ad || '';
+    etiket.textContent = I18N.tour360[lang];
+    kapat.textContent  = '✕ ' + I18N.tourClose[lang];
+    govde.innerHTML = '<p class="tur-bekle">' + I18N.tourLoading[lang] + '</p>';
+    const f = document.createElement('iframe');
+    f.src = url;
+    f.allow = 'fullscreen; accelerometer; gyroscope; xr-spatial-tracking; vr';
+    f.addEventListener('load', function(){ const b = govde.querySelector('.tur-bekle'); if(b) b.remove(); });
+    govde.appendChild(f);
+    katman.classList.add('acik');
+    katman.setAttribute('aria-hidden','false');
+  }
+  function kapatPencere(){
+    katman.classList.remove('acik');
+    katman.setAttribute('aria-hidden','true');
+    setTimeout(function(){ govde.innerHTML = ''; }, 320);
+  }
+  kapat.addEventListener('click', kapatPencere);
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') kapatPencere(); });
+  document.addEventListener('click', function(e){
+    const chip = e.target.closest('.unit-chip.has-tour');
+    if(chip) ac(chip.dataset.tur, chip.dataset.turAd);
+  });
+  document.addEventListener('keydown', function(e){
+    if(e.key !== 'Enter' && e.key !== ' ') return;
+    const chip = e.target.closest && e.target.closest('.unit-chip.has-tour');
+    if(chip){ e.preventDefault(); ac(chip.dataset.tur, chip.dataset.turAd); }
+  });
+  }
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', kur);
+  else kur();
+})();
 </script>
+<div class="tur-katman" id="turKatman" aria-hidden="true">
+  <div class="tur-ust">
+    <div>
+      <div class="tur-etiket" id="turEtiket">360°</div>
+      <div class="tur-baslik" id="turBaslik"></div>
+    </div>
+    <button class="tur-kapat" id="turKapat" type="button">✕</button>
+  </div>
+  <div class="tur-govde" id="turGovde"></div>
+</div>
 </body>
 </html>

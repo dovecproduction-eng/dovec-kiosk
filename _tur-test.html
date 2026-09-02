@@ -1,0 +1,51 @@
+<!doctype html><meta charset=utf-8><body style="font:13px/1.6 monospace;padding:14px;white-space:pre-wrap" id=o>çalışıyor…</body>
+<iframe id=f src="index.html" style="width:1400px;height:900px;position:absolute;left:-9999px"></iframe>
+<script>
+const log=[]; const ok=(a,k,d='')=>log.push((k?'✅':'❌')+' '+a+(d?' → '+d:''));
+const bekle=ms=>new Promise(r=>setTimeout(r,ms));
+document.getElementById('f').onload = async () => {
+  const w=f.contentWindow, d=f.contentDocument;
+  await bekle(1500);
+  try{
+    ok('openDetail erişilebilir', typeof w.openDetail==='function');
+    w.openDetail('quarencia');
+    await bekle(1200);
+    const chips=[...d.querySelectorAll('.unit-chip')];
+    ok('Querencia daire tipleri çizildi', chips.length===6, chips.length+' tip');
+    const turlu=chips.filter(c=>c.classList.contains('has-tour'));
+    ok('2 tipte 360 rozeti var', turlu.length===2, turlu.map(c=>c.querySelector('.u-name').textContent).join(', '));
+    ok('rozet metni 360°', turlu.length && turlu[0].querySelector('.u-tour').textContent.trim()==='360°');
+    ok('tursuz tipte rozet yok', chips.filter(c=>!c.classList.contains('has-tour')).every(c=>!c.querySelector('.u-tour')));
+
+    const katman=d.getElementById('turKatman');
+    ok('tur penceresi sayfada var', Boolean(katman));
+    ok('pencere başta kapalı', !katman.classList.contains('acik'));
+    turlu[0].click();
+    await bekle(500);
+    ok('tıklayınca pencere açıldı', katman.classList.contains('acik'));
+    const cerceve=katman.querySelector('iframe');
+    ok('matterport iframe yüklendi', Boolean(cerceve) && cerceve.src.includes('matterport.com'), cerceve?cerceve.src.slice(0,55):'yok');
+    ok('daire adı başlıkta', d.getElementById('turBaslik').textContent.trim().length>0, d.getElementById('turBaslik').textContent);
+    ok('360 etiketi', d.getElementById('turEtiket').textContent.includes('360'));
+    d.getElementById('turKapat').click();
+    await bekle(500);
+    ok('kapat butonu kapattı', !katman.classList.contains('acik'));
+
+    // Courtyard Platinum: yeni eklenen 3+1
+    w.openDetail('platinum');
+    await bekle(1000);
+    const pchips=[...d.querySelectorAll('.unit-chip')];
+    ok('Platinum 5 tip gösteriyor', pchips.length===5, pchips.length+' tip');
+    const p31=pchips.find(c=>c.querySelector('.u-name').textContent.trim()==='3+1');
+    ok('3+1 eklendi ve turu var', Boolean(p31) && p31.classList.contains('has-tour'));
+
+    // La Isla ve Panorama
+    w.openDetail('laisla'); await bekle(900);
+    ok('La Isla 3+1 Daire turu', [...d.querySelectorAll('.unit-chip.has-tour')].length===1);
+    w.openDetail('panorama'); await bekle(900);
+    ok('Panorama 2+1 turu', [...d.querySelectorAll('.unit-chip.has-tour')].length===1);
+  }catch(e){ log.push('❌ HATA: '+e.message); }
+  log.push(''); log.push('TOPLAM: '+log.filter(x=>x.startsWith('✅')).length+' geçti, '+log.filter(x=>x.startsWith('❌')).length+' kaldı');
+  o.textContent=log.join('\n');
+};
+</script>
