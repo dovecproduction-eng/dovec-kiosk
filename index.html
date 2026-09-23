@@ -55,27 +55,27 @@ body{
 .hero-frame::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
 .hero-frame::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
 
-.hero-top{position:absolute;top:0;left:0;right:0;padding:34px 52px;display:flex;justify-content:space-between;align-items:flex-start;z-index:5}
+.hero-top{position:absolute;top:0;left:0;right:0;padding:34px 52px;display:flex;justify-content:space-between;align-items:center;z-index:5}
 .brand-mark{display:flex;align-items:center;gap:14px;color:var(--white)}
 .brand-mark .b-name{font-family:'Playfair Display',serif;font-weight:600;letter-spacing:.42em;font-size:1.05rem;padding-left:.42em}
 .brand-mark .b-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 14px var(--gold)}
 
-.hero-top-right{display:flex;flex-direction:column;align-items:flex-end;gap:12px}
-
-/* ===== "Daireleri Keşfet": hero ekranında, dil seçicinin altında ===== */
-.hero-kesif-btn{display:inline-flex;align-items:center;gap:9px;cursor:pointer;border:none;
+/* ===== "Daireleri Keşfet": hero ekranının en üstünde, tam ortada ===== */
+.hero-kesif-btn{position:absolute;top:34px;left:50%;transform:translateX(-50%);z-index:6;
+  display:inline-flex;align-items:center;gap:9px;cursor:pointer;border:none;
   background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--navy-deep);
-  font-family:'Karla',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;
-  padding:11px 20px;border-radius:40px;box-shadow:0 10px 26px -8px rgba(197,146,58,.7);
+  font-family:'Karla',sans-serif;font-weight:700;font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;
+  padding:13px 24px;border-radius:40px;box-shadow:0 10px 26px -8px rgba(197,146,58,.7);
   animation:hero-kesif-pulse 2.6s ease-in-out infinite;transition:transform .3s var(--ease)}
-.hero-kesif-btn:hover{transform:translateY(-2px) scale(1.03)}
-.hero-kesif-btn:active{transform:translateY(0) scale(.98)}
-.hero-kesif-btn svg{width:15px;height:15px;stroke:var(--navy-deep);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.hero-kesif-btn:hover{transform:translateX(-50%) translateY(-2px) scale(1.03)}
+.hero-kesif-btn:active{transform:translateX(-50%) scale(.98)}
+.hero-kesif-btn svg{width:16px;height:16px;stroke:var(--navy-deep);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 @keyframes hero-kesif-pulse{
   0%,100%{box-shadow:0 10px 26px -8px rgba(197,146,58,.7),0 0 0 0 rgba(226,192,121,.45)}
   50%{box-shadow:0 10px 26px -8px rgba(197,146,58,.7),0 0 0 9px rgba(226,192,121,0)}
 }
 @media (prefers-reduced-motion:reduce){.hero-kesif-btn{animation:none}}
+@media (max-width:680px){.hero-kesif-btn{top:auto;bottom:18px}}
 
 /* ===== proje seçici: "Daireleri Keşfet"e basınca açılan katman ===== */
 .kesif-secici{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:42px;
@@ -678,17 +678,15 @@ body{
 
   <div class="hero-top">
     <div class="brand-mark"><span class="b-dot"></span><span class="b-name">DOVEC GROUP</span></div>
-    <div class="hero-top-right">
-      <div class="lang-switch" id="langHero">
-        <button data-lang="tr" class="on">TR</button>
-        <button data-lang="en">EN</button>
-      </div>
-      <button type="button" class="hero-kesif-btn" id="heroKesifBtn">
-        <svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
-        <span data-i18n="daireBulucu">Daireleri Keşfet</span>
-      </button>
+    <div class="lang-switch" id="langHero">
+      <button data-lang="tr" class="on">TR</button>
+      <button data-lang="en">EN</button>
     </div>
   </div>
+  <button type="button" class="hero-kesif-btn" id="heroKesifBtn">
+    <svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
+    <span data-i18n="daireBulucu">Daireleri Keşfet</span>
+  </button>
 
   <div class="hero-center">
     <div class="hero-eyebrow"><span></span><i data-i18n="heroEyebrow">DOĞU AKDENİZ'İN İMZASI</i><span></span></div>
