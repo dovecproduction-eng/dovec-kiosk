@@ -55,10 +55,57 @@ body{
 .hero-frame::before{top:-1px;left:-1px;border-right:0;border-bottom:0}
 .hero-frame::after{bottom:-1px;right:-1px;border-left:0;border-top:0}
 
-.hero-top{position:absolute;top:0;left:0;right:0;padding:34px 52px;display:flex;justify-content:space-between;align-items:center;z-index:5}
+.hero-top{position:absolute;top:0;left:0;right:0;padding:34px 52px;display:flex;justify-content:space-between;align-items:flex-start;z-index:5}
 .brand-mark{display:flex;align-items:center;gap:14px;color:var(--white)}
 .brand-mark .b-name{font-family:'Playfair Display',serif;font-weight:600;letter-spacing:.42em;font-size:1.05rem;padding-left:.42em}
 .brand-mark .b-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 14px var(--gold)}
+
+.hero-top-right{display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+
+/* ===== "Daireleri Keşfet": hero ekranında, dil seçicinin altında ===== */
+.hero-kesif-btn{display:inline-flex;align-items:center;gap:9px;cursor:pointer;border:none;
+  background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--navy-deep);
+  font-family:'Karla',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.09em;text-transform:uppercase;
+  padding:11px 20px;border-radius:40px;box-shadow:0 10px 26px -8px rgba(197,146,58,.7);
+  animation:hero-kesif-pulse 2.6s ease-in-out infinite;transition:transform .3s var(--ease)}
+.hero-kesif-btn:hover{transform:translateY(-2px) scale(1.03)}
+.hero-kesif-btn:active{transform:translateY(0) scale(.98)}
+.hero-kesif-btn svg{width:15px;height:15px;stroke:var(--navy-deep);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+@keyframes hero-kesif-pulse{
+  0%,100%{box-shadow:0 10px 26px -8px rgba(197,146,58,.7),0 0 0 0 rgba(226,192,121,.45)}
+  50%{box-shadow:0 10px 26px -8px rgba(197,146,58,.7),0 0 0 9px rgba(226,192,121,0)}
+}
+@media (prefers-reduced-motion:reduce){.hero-kesif-btn{animation:none}}
+
+/* ===== proje seçici: "Daireleri Keşfet"e basınca açılan katman ===== */
+.kesif-secici{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;padding:42px;
+  opacity:0;visibility:hidden;transition:opacity .4s var(--ease),visibility .4s}
+.kesif-secici.acik{opacity:1;visibility:visible}
+.kesif-secici-backdrop{position:absolute;inset:0;background:rgba(6,17,32,.85);backdrop-filter:blur(15px)}
+.kesif-secici-panel{position:relative;width:min(760px,94vw);max-height:84vh;display:flex;flex-direction:column;
+  background:var(--navy-deep);border:1px solid rgba(226,192,121,.28);border-radius:var(--r-xl);
+  box-shadow:0 40px 100px -20px rgba(0,0,0,.6);transform:translateY(16px);transition:transform .4s var(--ease)}
+.kesif-secici.acik .kesif-secici-panel{transform:none}
+.kesif-secici-head{flex:0 0 auto;display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:26px 30px;border-bottom:1px solid rgba(226,192,121,.16)}
+.kesif-secici-head h3{font-family:'Playfair Display',serif;font-weight:600;font-size:1.5rem;color:var(--white)}
+.kesif-secici-note{margin-top:8px;font-family:'Karla',sans-serif;font-size:.82rem;font-weight:300;color:rgba(255,255,255,.55);max-width:44ch}
+.kesif-secici-close{flex:0 0 auto;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.06);
+  border:1px solid rgba(226,192,121,.36);color:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.3s var(--ease)}
+.kesif-secici-close:hover{background:var(--gold);color:var(--navy-deep);transform:rotate(90deg)}
+.kesif-secici-close svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round}
+.kesif-secici-list{flex:1 1 auto;overflow-y:auto;padding:14px 18px 24px;display:grid;gap:10px}
+.ks-item{display:flex;align-items:center;gap:16px;padding:14px 16px;border-radius:14px;cursor:pointer;
+  background:rgba(255,255,255,.03);border:1px solid rgba(226,192,121,.14);transition:.3s var(--ease)}
+.ks-item:hover{background:rgba(226,192,121,.1);border-color:var(--gold)}
+.ks-item-ico{flex:0 0 auto;width:44px;height:44px;border-radius:50%;background:rgba(226,192,121,.14);
+  display:flex;align-items:center;justify-content:center}
+.ks-item-ico svg{width:20px;height:20px;stroke:var(--gold-light);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ks-item-info{flex:1 1 auto;min-width:0}
+.ks-item-info strong{display:block;font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--white)}
+.ks-item-info span{display:block;font-family:'Karla',sans-serif;font-size:.76rem;color:rgba(255,255,255,.5);margin-top:2px}
+.ks-item-arrow{flex:0 0 auto;color:var(--gold-light)}
+.ks-item-arrow svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
 
 .lang-switch{display:flex;gap:2px;background:rgba(255,255,255,.07);border:1px solid rgba(226,192,121,.3);border-radius:40px;padding:4px;backdrop-filter:blur(8px)}
 .lang-switch button{font-family:'Karla',sans-serif;font-weight:700;font-size:.7rem;letter-spacing:.12em;color:rgba(255,255,255,.6);
@@ -167,23 +214,6 @@ body{
 .back-btn:hover{background:rgba(226,192,121,.16);border-color:var(--gold)}
 .back-btn svg{width:16px;height:16px;stroke:var(--gold-light);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
 .detail-bar .d-brand{font-family:'Playfair Display',serif;letter-spacing:.4em;font-size:.82rem;color:rgba(255,255,255,.55);padding-left:.4em}
-
-/* ===== "Daireleri Keşfet": daire şeklinde, nabız animasyonlu buton (video bölümünün üstünde) ===== */
-.db-round-wrap{display:flex;flex-direction:column;align-items:center;gap:18px;max-width:1620px;margin:64px auto 24px}
-.db-round-note{color:rgba(255,255,255,.55);font-size:.82rem;font-weight:300;letter-spacing:.04em;text-align:center}
-.db-round{position:relative;width:172px;height:172px;border-radius:50%;flex-shrink:0;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:8px;cursor:pointer;border:none;
-  background:linear-gradient(135deg,var(--gold-light),var(--gold));color:var(--navy-deep);
-  box-shadow:0 18px 50px -14px rgba(197,146,58,.75);transition:transform .4s var(--ease),box-shadow .4s var(--ease)}
-.db-round:hover{transform:scale(1.045);box-shadow:0 26px 60px -14px rgba(197,146,58,.9)}
-.db-round:active{transform:scale(.98)}
-.db-round svg{width:32px;height:32px;stroke:var(--navy-deep);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.db-round span{font-family:'Karla',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase}
-.db-round::before,.db-round::after{content:'';position:absolute;inset:0;border-radius:50%;
-  border:1.5px solid var(--gold-light);animation:db-pulse 2.8s var(--ease) infinite;pointer-events:none}
-.db-round::after{animation-delay:1.4s}
-@keyframes db-pulse{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.5);opacity:0}}
-@media (prefers-reduced-motion:reduce){.db-round::before,.db-round::after{animation:none;display:none}}
 
 .detail-body{flex:1 1 auto;overflow-y:auto;overflow-x:hidden;padding:0 52px 50px;-webkit-overflow-scrolling:touch}
 .detail-body::-webkit-scrollbar{width:0}
@@ -648,9 +678,15 @@ body{
 
   <div class="hero-top">
     <div class="brand-mark"><span class="b-dot"></span><span class="b-name">DOVEC GROUP</span></div>
-    <div class="lang-switch" id="langHero">
-      <button data-lang="tr" class="on">TR</button>
-      <button data-lang="en">EN</button>
+    <div class="hero-top-right">
+      <div class="lang-switch" id="langHero">
+        <button data-lang="tr" class="on">TR</button>
+        <button data-lang="en">EN</button>
+      </div>
+      <button type="button" class="hero-kesif-btn" id="heroKesifBtn">
+        <svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
+        <span data-i18n="daireBulucu">Daireleri Keşfet</span>
+      </button>
     </div>
   </div>
 
@@ -1218,7 +1254,7 @@ const I18N = {
   moreInfo:{tr:'Daha Fazla Bilgi', en:'More Information'},
   moreInfoNote:{tr:'Ayrıntılı bilgi için web sitemizi ziyaret edin', en:'Visit our website for more details'},
   daireBulucu:{tr:'Daireleri Keşfet', en:'Explore Apartments'},
-  daireBulucuNote:{tr:'İnteraktif 3D plan üzerinde size uygun daireyi keşfedin', en:'Discover the right apartment on the interactive 3D plan'},
+  daireBulucuNote:{tr:'İnteraktif 3D plan üzerinde daireleri keşfetmek istediğiniz projeyi seçin', en:'Choose a project to explore its apartments on the interactive 3D plan'},
   soonTitle:{tr:'Çok Yakında', en:'Coming Soon'},
   soonText:{tr:'Bu içerik yakında eklenecek.', en:'This content will be added soon.'},
   presentBtn:{tr:'Sunumu Başlat', en:'Start Presentation'},
@@ -1514,16 +1550,6 @@ function openDetail(id){
       ${buildVideoCards(p)}
     </div>`;
 
-  // "Daireleri Keşfet": interaktif 3D daire keşfi, video bölümünün üstünde
-  // daire şeklinde bir buton (kiosk içinde katman olarak açılır)
-  const dbRoundHTML = p.explorerUrl ? `<div class="db-round-wrap">
-      <div class="db-round-note">${I18N.daireBulucuNote[lang]}</div>
-      <button type="button" class="db-round db-cta" data-tur="${p.explorerUrl}" data-tur-ad="${I18N.daireBulucu[lang]} — ${p.name}">
-        <svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg>
-        <span>${I18N.daireBulucu[lang]}</span>
-      </button>
-    </div>` : '';
-
   // "Daha Fazla Bilgi" butonu → dovecgroup.com
   const ctaHTML = `<div class="more-cta-wrap">
       <div class="more-cta-note">${I18N.moreInfoNote[lang]}</div>
@@ -1564,7 +1590,6 @@ function openDetail(id){
       </div>
       <div class="iselector" id="iselector">${panels}</div>
     </div>`:''}
-    ${dbRoundHTML}
     ${videoHTML}
     ${ctaHTML}`;
 
@@ -2110,6 +2135,46 @@ durumGeriYukle();   // oynatıcı sayfayı yenilediyse ziyaretçinin yerini geri
     const db = e.target.closest && e.target.closest('.db-cta');
     if(db){ e.preventDefault(); ac(db.dataset.tur, db.dataset.turAd); }
   });
+
+  /* ---- "Daireleri Keşfet": hero'daki buton → proje seçici katmanı ---- */
+  const heroBtn = document.getElementById('heroKesifBtn');
+  const secici  = document.getElementById('kesifSecici');
+  if(heroBtn && secici){
+    const seciciListe    = document.getElementById('ksListe');
+    const seciciKapatBtn = document.getElementById('ksKapat');
+    const seciciBackdrop = secici.querySelector('[data-ksclose]');
+
+    function seciciDoldur(){
+      const projeler = PROJECTS.filter(p => p.explorerUrl);
+      seciciListe.innerHTML = projeler.map(p => `
+        <button type="button" class="ks-item" data-tur="${p.explorerUrl}" data-tur-ad="${I18N.daireBulucu[lang]} — ${p.name}">
+          <span class="ks-item-ico"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M9 20v-6h6v6"/></svg></span>
+          <span class="ks-item-info"><strong>${p.name}</strong><span>${p.label[lang]}</span></span>
+          <span class="ks-item-arrow"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+        </button>`).join('');
+    }
+    function seciciAc(){
+      seciciDoldur();
+      secici.classList.add('acik');
+      secici.setAttribute('aria-hidden','false');
+    }
+    function seciciKapat(){
+      secici.classList.remove('acik');
+      secici.setAttribute('aria-hidden','true');
+    }
+    heroBtn.addEventListener('click', seciciAc);
+    seciciKapatBtn.addEventListener('click', seciciKapat);
+    seciciBackdrop.addEventListener('click', seciciKapat);
+    seciciListe.addEventListener('click', function(e){
+      const item = e.target.closest('.ks-item');
+      if(!item) return;
+      seciciKapat();
+      ac(item.dataset.tur, item.dataset.turAd);
+    });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && secici.classList.contains('acik')) seciciKapat();
+    });
+  }
   }
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', kur);
   else kur();
@@ -2124,6 +2189,21 @@ durumGeriYukle();   // oynatıcı sayfayı yenilediyse ziyaretçinin yerini geri
     <button class="tur-kapat" id="turKapat" type="button">✕</button>
   </div>
   <div class="tur-govde" id="turGovde"></div>
+</div>
+<div class="kesif-secici" id="kesifSecici" aria-hidden="true">
+  <div class="kesif-secici-backdrop" data-ksclose></div>
+  <div class="kesif-secici-panel">
+    <div class="kesif-secici-head">
+      <div>
+        <h3 class="serif" data-i18n="daireBulucu">Daireleri Keşfet</h3>
+        <p class="kesif-secici-note" data-i18n="daireBulucuNote">İnteraktif 3D plan üzerinde daireleri keşfetmek istediğiniz projeyi seçin</p>
+      </div>
+      <button class="kesif-secici-close" id="ksKapat" type="button" aria-label="Kapat">
+        <svg viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="kesif-secici-list" id="ksListe"></div>
+  </div>
 </div>
 </body>
 </html>
